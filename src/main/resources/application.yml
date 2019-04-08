@@ -1,7 +1,7 @@
 spring:
   data:
     neo4j:
-      uri: bolt://localhost:7687
+      uri: bolt://47.107.150.100:7687
       username: neo4j
       password: asdfgh
 
@@ -9,6 +9,6 @@ spring:
 
 jfinal:
   debug: true
-  jdbcUrl: jdbc:mysql://120.79.79.141:3306/cross2u?characterEncoding=utf8&serverTimezone=UTC
+  jdbcUrl: jdbc:mysql://localhost:3306/bigdata?characterEncoding=utf8&serverTimezone=UTC
   dbUser: root
-  dbPwd: 123456
+  dbPwd: wxm19980928
