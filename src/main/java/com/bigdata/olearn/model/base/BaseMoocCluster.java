@@ -15,7 +15,7 @@ public abstract class BaseMoocCluster<M extends BaseMoocCluster<M>> extends Mode
 		set("id", id);
 	}
 
-	public Long getId() {
+	public BigInteger getId() {
 		return get("id");
 	}
 
@@ -33,6 +33,14 @@ public abstract class BaseMoocCluster<M extends BaseMoocCluster<M>> extends Mode
 
 	public String getPrelabel() {
 		return get("prelabel");
+	}
+
+	public void setFieldId(BigInteger fieldId) {
+		set("field_id", fieldId);
+	}
+
+	public BigInteger getFieldId() {
+		return get("field_id");
 	}
 
 	public void setCreatetime(java.util.Date createtime) {

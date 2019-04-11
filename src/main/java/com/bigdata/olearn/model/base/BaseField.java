@@ -10,11 +10,11 @@ import java.math.BigInteger;
  */
 @SuppressWarnings("serial")
 public abstract class BaseField<M extends BaseField<M>> extends Model<M> implements IBean {
-    public void setFieldId(Long fieldId) {
+    public void setFieldId(BigInteger fieldId) {
         set("field_id", fieldId);
     }
 
-    public Long getFieldId() {
+    public BigInteger getFieldId() {
         return get("field_id");
     }
 

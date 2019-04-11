@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -21,8 +22,8 @@ public class UserControllerW {
     //将知识点加入学习路线
     @RequestMapping(value="/addKnowledgeToPath")
     public BaseResponse addKnowledgeToPath(
-            @RequestParam(value = "userId")Long userId,
-            @RequestParam(value = "clusterId")Long clusterId
+            @RequestParam(value = "userId")BigInteger userId,
+            @RequestParam(value = "clusterId")BigInteger clusterId
     ){
         userServiceW.addKnowledgeLabel(userId,clusterId);
         br.setResult(ResultCodeEnum.SUCCESS);
@@ -31,11 +32,12 @@ public class UserControllerW {
     //todo:将课程加入学习路线(未测试)
     @RequestMapping(value="/addCourseToPath")
     public BaseResponse addCourseToPath(
-            @RequestParam(value = "userId")Long userId,
-            @RequestParam(value = "moocId")Long[] moocId,
-            @RequestParam(value = "clusterId")Long clusterId
+            @RequestParam(value = "userId")BigInteger userId,
+            @RequestParam(value = "moocId")BigInteger[] moocId,
+            @RequestParam(value = "clusterId")BigInteger clusterId,
+            @RequestParam(value = "theMinRank")Integer theMinRank
     ){
-        userServiceW.addCourseToPath(userId,moocId,clusterId);
+        userServiceW.addCourseToPath(userId,moocId,clusterId,theMinRank);
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
@@ -43,19 +45,19 @@ public class UserControllerW {
     //进入详细知识点查看知识点的学习情况
     @RequestMapping(value="/showKnowledgeLearnSituaton")
     public BaseResponse showKnowledgeLearnSituaton(
-            @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "clusterId") Long clusterId
+            @RequestParam(value = "userId") BigInteger userId,
+            @RequestParam(value = "clusterId") BigInteger clusterId
     ){
         List<Record> data= userServiceW.showKnowledgeLearnSituaton(userId,clusterId);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
         return br;
     }
-    //显示课程目录
+    //显示用户学习的课程目录
     @RequestMapping(value="/showMySchedule")
     public BaseResponse showMySchedule(
-            @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "moocId") Long moocId
+            @RequestParam(value = "userId") BigInteger userId,
+            @RequestParam(value = "moocId") BigInteger moocId
     ){
         List<Record> data= userServiceW.showMySchedule(userId,moocId);
         br.setResult(ResultCodeEnum.SUCCESS);
@@ -65,8 +67,8 @@ public class UserControllerW {
     //点亮课程进度
     @RequestMapping(value="/setMyMoocPlan")
     public BaseResponse setMyMoocPlan(
-            @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "moocId") Long moocId,
+            @RequestParam(value = "userId") BigInteger userId,
+            @RequestParam(value = "moocId") BigInteger moocId,
             @RequestParam(value = "sequence") Integer sequence
     ){
         userServiceW.setMyMoocPlan(userId,moocId,sequence);
@@ -78,7 +80,7 @@ public class UserControllerW {
     //显示个人能力标签
     @RequestMapping(value="/showMyLabel")
     public BaseResponse showMyLabel(
-            @RequestParam(value = "userId") Long userId
+            @RequestParam(value = "userId") BigInteger userId
     ){
         List<Record> data = userServiceW.showMyLabel(userId);
         br.setData(data);

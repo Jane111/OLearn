@@ -10,25 +10,25 @@ import java.math.BigInteger;
  */
 @SuppressWarnings("serial")
 public abstract class BaseAbility<M extends BaseAbility<M>> extends Model<M> implements IBean {
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         set("id", id);
     }
 
-    public Long getId() {
+    public BigInteger getId() {
         return get("id");
     }
-    public void setUserId(Long userId) {
+    public void setUserId(BigInteger userId) {
         set("user_id", userId);
     }
 
-    public Long getUserId() {
+    public BigInteger getUserId() {
         return get("user_id");
     }
-    public void setClusterId(Long clusterId) {
+    public void setClusterId(BigInteger clusterId) {
         set("cluster_id", clusterId);
     }
 
-    public Long getClusterId() {
+    public BigInteger getClusterId() {
         return get("cluster_id");
     }
 

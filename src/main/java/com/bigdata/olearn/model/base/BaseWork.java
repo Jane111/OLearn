@@ -11,11 +11,11 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseWork<M extends BaseWork<M>> extends Model<M> implements IBean {
 
-	public void setWorkId(Long workId) {
+	public void setWorkId(BigInteger workId) {
 		set("work_id", workId);
 	}
 
-	public Long getWorkId() {
+	public BigInteger getWorkId() {
 		return get("work_id");
 	}
 
@@ -27,11 +27,11 @@ public abstract class BaseWork<M extends BaseWork<M>> extends Model<M> implement
 		return get("workname");
 	}
 
-	public void setClusterId(Long clusterId) {
+	public void setClusterId(BigInteger clusterId) {
 		set("cluster_id", clusterId);
 	}
 
-	public Long getClusterId() {
+	public BigInteger getClusterId() {
 		return get("cluster_id");
 	}
 

@@ -34,13 +34,22 @@ public class MoocController {
     }
     //显示课程详情
     @RequestMapping(value="/moocDetail")
-    public BaseResponse moocDetail(Long moocId){
+    public BaseResponse moocDetail(BigInteger moocId){
         Record data=moocServiceW.moocDetail(moocId);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
         return br;
     }
-    //显示领域标签
+
+    //显示课程的目录
+    @RequestMapping(value="/moocMenu")
+    public BaseResponse moocMenu(BigInteger moocId){
+        Record data=moocServiceW.moocMenu(moocId);
+        br.setResult(ResultCodeEnum.SUCCESS);
+        br.setData(data);
+        return br;
+    }
+    //显示课程领域标签
     @RequestMapping(value="/showLabel")
     public BaseResponse showLabel(){
         List<Record> data=moocServiceW.getLabel();
@@ -49,9 +58,9 @@ public class MoocController {
         return br;
     }
     //todo:显示某个领域下的知识图谱——图实现
-    @RequestMapping(value="/showCourse")
+    @RequestMapping(value="/showKnowledgeGraph")
     public BaseResponse showKnowledgeGraph(
-            @RequestParam(value = "fieldId")Long fieldId
+            @RequestParam(value = "fieldId")BigInteger fieldId
     ){
         List<Record>data=moocServiceW.getCourse(fieldId);
         br.setData(data);
@@ -61,13 +70,25 @@ public class MoocController {
     //显示某个知识点下的课程
     @RequestMapping(value="/showCourse")
     public BaseResponse showCourse(
-            @RequestParam(value = "clusterId")Long clusterId
+            @RequestParam(value = "clusterId")BigInteger clusterId
     ){
         List<Record>data=moocServiceW.getCourse(clusterId);
         br.setData(data);
         br.setResult(ResultCodeEnum.SUCCESS);
         return  br;
     }
+
+    //显示某个知识点下的课程
+    @RequestMapping(value="/showCourseMenu")
+    public BaseResponse showCourseMenu(
+            @RequestParam(value = "clusterId")BigInteger clusterId
+    ){
+        List<Record>data=moocServiceW.getCourse(clusterId);
+        br.setData(data);
+        br.setResult(ResultCodeEnum.SUCCESS);
+        return  br;
+    }
+
     //todo：显示系统收录课程资源数量
     //todo：课程来源平台占比
     //todo：热门课程top10

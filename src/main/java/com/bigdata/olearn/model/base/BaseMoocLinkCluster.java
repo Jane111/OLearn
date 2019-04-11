@@ -11,19 +11,19 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseMoocLinkCluster<M extends BaseMoocLinkCluster<M>> extends Model<M> implements IBean {
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		set("id", id);
 	}
 
-	public Long getId() {
+	public BigInteger getId() {
 		return get("id");
 	}
 
-	public void setMoocId(Long moocId) {
+	public void setMoocId(BigInteger moocId) {
 		set("mooc_id", moocId);
 	}
 
-	public Long getMoocId() {
+	public BigInteger getMoocId() {
 		return get("mooc_id");
 	}
 
@@ -51,11 +51,11 @@ public abstract class BaseMoocLinkCluster<M extends BaseMoocLinkCluster<M>> exte
 		return get("rank");
 	}
 
-	public void setClusterId(Long clusterId) {
+	public void setClusterId(BigInteger clusterId) {
 		set("cluster_id", clusterId);
 	}
 
-	public Long getClusterId() {
+	public BigInteger getClusterId() {
 		return get("cluster_id");
 	}
 

@@ -11,11 +11,11 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseMooc<M extends BaseMooc<M>> extends Model<M> implements IBean {
 
-	public void setMoocId(Long moocId) {
+	public void setMoocId(BigInteger moocId) {
 		set("mooc_id", moocId);
 	}
 
-	public Long getMoocId() {
+	public BigInteger getMoocId() {
 		return get("mooc_id");
 	}
 

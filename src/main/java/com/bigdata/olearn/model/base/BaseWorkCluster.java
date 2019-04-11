@@ -11,11 +11,11 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseWorkCluster<M extends BaseWorkCluster<M>> extends Model<M> implements IBean {
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		set("id", id);
 	}
 
-	public Long getId() {
+	public BigInteger getId() {
 		return get("id");
 	}
 
