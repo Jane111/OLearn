@@ -1,6 +1,6 @@
 package com.bigdata.olearn.controller;
 
-import com.bigdata.olearn.service.UserServiceL;
+import com.bigdata.olearn.service.UserServiceW;
 import com.bigdata.olearn.util.BaseResponse;
 import com.bigdata.olearn.util.ResultCodeEnum;
 import com.jfinal.plugin.activerecord.Record;
@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @RestController
 @RequestMapping("/user")
 public class UserControllerW {
     @Autowired
-    UserServiceL userServiceL;
+    UserServiceW userServiceW;
     @Autowired
     BaseResponse br;
     //将知识点加入学习路线
@@ -25,7 +24,7 @@ public class UserControllerW {
             @RequestParam(value = "userId")Long userId,
             @RequestParam(value = "clusterId")Long clusterId
     ){
-        userServiceL.addKnowledgeLabel(userId,clusterId);
+        userServiceW.addKnowledgeLabel(userId,clusterId);
         br.setResult(ResultCodeEnum.SUCCESS);
         return  br;
     }
@@ -36,7 +35,7 @@ public class UserControllerW {
             @RequestParam(value = "moocId")Long[] moocId,
             @RequestParam(value = "clusterId")Long clusterId
     ){
-        userServiceL.addCourseToPath(userId,moocId,clusterId);
+        userServiceW.addCourseToPath(userId,moocId,clusterId);
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
@@ -47,7 +46,7 @@ public class UserControllerW {
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "clusterId") Long clusterId
     ){
-        List<Record> data=userServiceL.showKnowledgeLearnSituaton(userId,clusterId);
+        List<Record> data= userServiceW.showKnowledgeLearnSituaton(userId,clusterId);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
         return br;
@@ -58,7 +57,7 @@ public class UserControllerW {
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "moocId") Long moocId
     ){
-        List<Record> data=userServiceL.showMySchedule(userId,moocId);
+        List<Record> data= userServiceW.showMySchedule(userId,moocId);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
         return br;
@@ -70,7 +69,7 @@ public class UserControllerW {
             @RequestParam(value = "moocId") Long moocId,
             @RequestParam(value = "sequence") Integer sequence
     ){
-        userServiceL.setMyMoocPlan(userId,moocId,sequence);
+        userServiceW.setMyMoocPlan(userId,moocId,sequence);
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
@@ -81,7 +80,7 @@ public class UserControllerW {
     public BaseResponse showMyLabel(
             @RequestParam(value = "userId") Long userId
     ){
-        List<Record> data = userServiceL.showMyLabel(userId);
+        List<Record> data = userServiceW.showMyLabel(userId);
         br.setData(data);
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
