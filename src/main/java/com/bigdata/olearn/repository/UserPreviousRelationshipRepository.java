@@ -16,10 +16,21 @@ public interface UserPreviousRelationshipRepository extends Neo4jRepository<User
     /**
      * 查询知识图谱，根据用户Id
      * @param uId -- 用户Id
+     * @param area -- 领域名称
      * @return
      */
     @Query("match p = (n:userpoint{uId:{0},pArea:{1}})-[r:USERPREVIOUS]->(b) return p")
     List<UserPreviousRelationship> getRelationshipByUIdAndArea(Long uId,String area);
+
+    /**
+     * 查询知识图谱，根据用户Id
+     * @param uId -- 用户Id
+     * @param areaId -- 领域Id
+     * @return
+     */
+    @Query("match p = (n:userpoint{uId:{0},pAreaId:{1}})-[r:USERPREVIOUS]->(b) return p")
+    List<UserPreviousRelationship> getRelationshipByUIdAndAreaId(Long uId,Long areaId);
+
 
 
     /**

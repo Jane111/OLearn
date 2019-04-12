@@ -11,7 +11,7 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseMoocCluster<M extends BaseMoocCluster<M>> extends Model<M> implements IBean {
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		set("id", id);
 	}
 
