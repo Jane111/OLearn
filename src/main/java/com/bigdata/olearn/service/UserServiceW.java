@@ -107,8 +107,8 @@ public class UserServiceW {
         return Db.find("SELECT DISTINCT mooc_id ,mooc_name,rank FROM schedule WHERE user_id=? AND cluster_id=?",userId,clusterId);
     }
     //查看某个用户的某一课程的进度，即目录的点亮情况
-    public List<Record> showMySchedule(BigInteger userId,BigInteger moocId){
-        return Db.find("SELECT * FROM schedule WHERE user_id=? AND mooc_id=? ORDER BY sequence",userId,moocId);
+    public List<Record> showMySchedule(BigInteger userId,BigInteger clusterId,Integer rank){
+        return Db.find("SELECT * FROM schedule WHERE rank=? AND user_id=? AND cluster_id=? ORDER BY sequence",rank,userId,clusterId);
     }
     //点亮课程进度
     public void setMyMoocPlan(BigInteger userId,BigInteger moocId,Integer sequence){

@@ -58,9 +58,10 @@ public class UserControllerW {
     @RequestMapping(value="/showMySchedule")
     public BaseResponse showMySchedule(
             @RequestParam(value = "userId") BigInteger userId,
-            @RequestParam(value = "moocId") BigInteger moocId
+            @RequestParam(value = "clusterId") BigInteger clusterId,
+            @RequestParam(value = "rank") Integer rank
     ){
-        List<Record> data= userServiceW.showMySchedule(userId,moocId);
+        List<Record> data= userServiceW.showMySchedule(userId,clusterId,rank);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
         return br;
