@@ -30,7 +30,7 @@ public class WorkServiceW {
         List<WorkCluster> canDo=new ArrayList<>();
         OUTER:
         for(WorkCluster workCluster:workClusters){
-            String [] requests=workCluster.getRequest().split("[&,&]");
+            String [] requests=workCluster.getRequest().substring(1,workCluster.getRequest().length()-1).split(",");
             for(String request:requests){
                 if(!myAbilities.contains((String)request)){
                     break OUTER;
