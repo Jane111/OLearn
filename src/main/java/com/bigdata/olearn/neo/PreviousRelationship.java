@@ -40,18 +40,18 @@ public class PreviousRelationship implements Serializable {
         this.endNode = endNode;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        PreviousRelationship pn = (PreviousRelationship) o;
-//
-//        return id.equals(pn.id);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return id.hashCode();
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PreviousRelationship pr = (PreviousRelationship) o;
+
+        return id.equals(pr.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public interface PreviousRelationshipRepository extends Neo4jRepository<PreviousRelationship,Long> {
 
     /**
-     * 根据领域，查询知识图谱的关系和又关系的节点
+     * 根据领域，查询知识图谱的关系和有关系的节点
      * @param pArea -- 领域名称
      * @return
      */
@@ -22,7 +22,7 @@ public interface PreviousRelationshipRepository extends Neo4jRepository<Previous
     List<PreviousRelationship> getRelationshipByPArea(String pArea);
 
     /**
-     * 根据领域，查询知识图谱的关系和又关系的节点
+     * 根据领域，查询知识图谱的关系和有关系的节点
      * @param pAreaId -- 领域Id
      * @return
      */
@@ -47,6 +47,14 @@ public interface PreviousRelationshipRepository extends Neo4jRepository<Previous
      */
     @Query("match p = (a:point{pName:{0}})-[r:PREVIOUS]->(b:point) return p")
     List<PreviousRelationship> getPreviousRelationshipByPName(String startNodePName);
+
+    /**
+     * 根据point的pnameId得到其所有的前导关系
+     * @param startNodePNameId -- 起始知识点的名称
+     * @return
+     */
+    @Query("match p = (a:point{pNameId:{0}})-[r:PREVIOUS]->(b:point) return p")
+    List<PreviousRelationship> getPreviousRelationshipByPNameId(Long startNodePNameId);
 
 
 //    /**

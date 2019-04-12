@@ -14,6 +14,18 @@ public interface UserPointNodeRepository extends Neo4jRepository<UserPointNode,L
 
     List<UserPointNode> findUserPointNodesByPAreaIdIsAndUIdIs(Long pAreaId,Long uId);//根据pAreaId and uId找到对应的point
 
+    UserPointNode findUserPointNodeByPNameIdAndUIdIs(Long pNameId,Long uId);//通过知识点得到
+    /*
+    * 得到用户图谱中某个知识点的所有前导节点
+    * */
+    /**
+     * 根据point的pnameId得到其所有的前导课程
+     * @param pNameId -- 知识点的名称Id
+     * @return
+     */
+    @Query("match (a:userpoint{pNameId:{0}})-[r*]->(b:userpoint) return b")
+    List<UserPointNode> getUserPreviousPointByPNameId(Long pNameId);
+
     /*
     * 修改用户知识图谱中知识点的状态 0学习完成/1正在学习/2推荐学习/3未学习
     * */
