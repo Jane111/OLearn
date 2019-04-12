@@ -28,8 +28,8 @@ public class MoocServiceW {
     }
 
     //查看mooc菜单
-    public Record moocMenu(BigInteger moocId){
-        return Db.findFirst("SELECT mooc_id,lesson,sequence FROM mooc_menu WHERE mooc_id=? ORDER BY sequence",moocId);
+    public List<Record> moocMenu(BigInteger moocId){
+        return Db.find("SELECT mooc_id,lesson,sequence FROM mooc_menu WHERE mooc_id=? ORDER BY sequence",moocId);
     }
 
     //显示领域标签

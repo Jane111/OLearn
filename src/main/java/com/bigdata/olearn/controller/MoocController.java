@@ -64,7 +64,7 @@ public class MoocController {
     //显示课程的目录
     @RequestMapping(value="/moocMenu")
     public BaseResponse moocMenu(BigInteger moocId){
-        Record data=moocServiceW.moocMenu(moocId);
+        List<Record> data=moocServiceW.moocMenu(moocId);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
         return br;
