@@ -43,6 +43,8 @@ public class MoocServiceW {
     }
     //显示某个知识点的课程
     public List<Record> getCourse(BigInteger clusterId){
-        return Db.find("SELECT mooc_id,title,introduce,rank FROM mooc_link_cluster WHERE cluster_id=?",clusterId);
+        //return Db.find("SELECT mooc_id,title,introduce,rank FROM mooc_link_cluster WHERE cluster_id=?",clusterId);
+        return Db.find("SELECT mooc.mooc_id,mooc.title,mooc.introduce,mooc.people,mooc.professor,rank,institute " +
+                "FROM mooc_link_cluster LEFT JOIN mooc on mooc_link_cluster.mooc_id=mooc.mooc_id WHERE cluster_id=?",clusterId);
     }
 }
