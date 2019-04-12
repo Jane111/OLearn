@@ -47,6 +47,15 @@
             padding: 10px 0;
             font-size: 12px;
         }
+        .part{
+            display: flex;
+            justify-content:space-between;
+            align-items: flex-end;
+            width: 100%;
+        }
+        .done{
+            color:#a0ce4e;
+        }
     </style>
 </head>
 <body>
@@ -126,60 +135,21 @@
                             <li class="">高级课程</li>
                         </ul>
                         <div class="tabs__content ">
-                            <ul class="curriculum-list">
+                            <ul id="primaryLine" class="curriculum-list">
                                 <li>
                                     <ul>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;color:#a0ce4e;width: 100%;">
+                                        <li v-for="item in primaryLine">
+                                            <div class="curriculum-list__box part" :class="item.columns.status==0 ? '':'done'">
                                                 <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
+                                                    <div>{{item.columns.mooc_name}}.</div>
+                                                    <div>{{item.columns.lesson}}</div>
                                                 </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                <div v-if="item.columns.status==0">
+                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" @click="lighten">
+                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;color:#a0ce4e;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;color:#a0ce4e;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;color:#a0ce4e;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;color:#a0ce4e;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
+                                                <div v-else>
                                                     <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
                                                 </div>
                                             </div>
@@ -189,71 +159,21 @@
                             </ul>
                         </div>
                         <div class="tabs__content active">
-                            <ul class="curriculum-list">
+                            <ul id="moderateLine" class="curriculum-list">
                                 <li>
                                     <ul>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;color:#a0ce4e;width: 100%;">
+                                        <li v-for="item in moderateLine">
+                                            <div class="curriculum-list__box part" :class="item.columns.status==0 ? '':'done'">
                                                 <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
+                                                    <div>{{item.columns.mooc_name}}.</div>
+                                                    <div>{{item.columns.lesson}}</div>
                                                 </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                <div v-if="item.columns.status==0">
+                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" @click="lighten">
+                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
+                                                <div v-else>
                                                     <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
                                                 </div>
                                             </div>
@@ -263,60 +183,21 @@
                             </ul>
                         </div>
                         <div class="tabs__content">
-                            <ul class="curriculum-list">
+                            <ul id="seniorLine" class="curriculum-list">
                                 <li>
                                     <ul>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
+                                        <li v-for="item in seniorLine">
+                                            <div class="curriculum-list__box part" :class="item.columns.status==0 ? '':'done'">
                                                 <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
+                                                    <div>{{item.columns.mooc_name}}.</div>
+                                                    <div>{{item.columns.lesson}}</div>
                                                 </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                <div v-if="item.columns.status==0">
+                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" @click="lighten">
+                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list__box" style="display: flex;justify-content:space-between;align-items: flex-end;width: 100%;">
-                                                <div style="display: flex;align-items: flex-end;">
-                                                    <div>Lesson 1.</div>
-                                                    <div>Introduction to UI Design</div>
-                                                </div>
-                                                <div>
+                                                <div v-else>
                                                     <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
                                                 </div>
                                             </div>
@@ -425,10 +306,10 @@
 <!--Vue-->
 <script src="../plugin/vue/vue.js"></script>
 <script src="../plugin/vue/vue-resource.js"></script>
-<script src="../js/template.js"></script>
 
+<script src="../js/requestIp.js"></script>
 <script src="../js/main.js"></script>
 
-
+<script src="../js/studyLine.js"></script>
 
 </body></html>

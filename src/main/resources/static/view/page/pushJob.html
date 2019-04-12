@@ -14,6 +14,8 @@
 
 <link rel="stylesheet" href="../css/font-awesome.min.css">
 
+<link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.min.css">
+
 <link rel="stylesheet" href="../css/style.css">
 
     <!--LayUI -->
@@ -29,12 +31,13 @@
             display: flex;
             flex-wrap: wrap;
         }
+
         .abilityLabelList>div{
             width:20%;
             margin-right: 15px;
             box-sizing: border-box;
             padding: 10px;
-            margin-bottom: 0;
+            margin-bottom: 20px;
         }
         .abilityLabelContent{
             display: flex;
@@ -46,6 +49,14 @@
             font-weight: normal;
             padding: 10px 0;
             font-size: 12px;
+        }
+        .quest{
+            overflow : hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -113,214 +124,95 @@
         </div>
     </header>
 
-<main class="content-row">
-    <div class="page-title-wrapp">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-title-01">O'Learn</h1>
+    <main class="content-row" id="job_vue_box">
+        <div class="page-title-wrapp">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-title-01">O'Learn</h1>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="breadcrumbs">
-                        <li class="active">
-                            <a href="./personal.html">个人中心</a>
-                        </li>
-                        <li>岗位推荐</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-<div class="content-box-01 events">
-<div class="container">
-<div class="row">
-<div class="col-lg-12">
-    <div class="row" style="margin-bottom:20px ">
-        <span class="sort-item"  style="font-size: 20px">当前能力水平</span>
-        <div class="abilityLabelList">
-            <div class="price-box-02__header abilityLabel">
-                <div class="price-box-02__header-title abilityLabelContent">
-                    <div>Java程序设计</div>
-                    <div class="level">学习进度:高级</div>
-                </div>
-            </div>
-            <div class="price-box-02__header abilityLabel">
-                <div class="price-box-02__header-title abilityLabelContent">
-                    <div>Java程序设计</div>
-                    <div class="level">学习进度:高级</div>
-                </div>
-            </div>
-            <div class="price-box-02__header abilityLabel">
-                <div class="price-box-02__header-title abilityLabelContent">
-                    <div>Java程序设计</div>
-                    <div class="level">学习进度:暂未完成</div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="breadcrumbs">
+                            <li class="active">
+                                <a href="./personal.html">个人中心</a>
+                            </li>
+                            <li>岗位推荐</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <span class="sort-item"  style="font-size: 20px">匹配结果</span>
-    </div>
+        <div class="content-box-01 events">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row" style="margin-bottom:20px ">
+                            <span class="sort-item"  style="font-size: 20px">当前能力水平</span>
+                            <div class="abilityLabelList">
+                                <div v-for="item in labelList" class="price-box-02__header abilityLabel">
+                                    <div class="price-box-02__header-title abilityLabelContent">
+                                        <div>{{item.columns.classname}}</div>
+                                        <div v-if="item.columns.rank==0" class="level">学习进度:暂无记录</div>
+                                        <div v-else-if="item.columns.rank==1" class="level">学习进度:已完成初级</div>
+                                        <div v-else-if="item.columns.rank==2" class="level">学习进度:已完成中级</div>
+                                        <div v-else class="level">学习进度:已完成高级</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="sort-item"  style="font-size: 20px">匹配结果</span>
+                        </div>
 
-<div class="events-list">
+                        <div v-for="items in jobList" class="events-list">
 
-<div class="events-list__content">
-<h4 class="events-list__content-title">
-<a href="#single_event.html">资深Android开发工程师</a>
-</h4>
-    <h4 class="events-list__content-title">
-        <a href="#single_event.html">招聘公司</a>
-    </h4>
-<div class="events-list__content-text">
-<p>职位要求Before cats conquered the internet, they conquered the world—with a little help from their human serfs. Domesticated cats live pretty much everywhere except Antarctica, and a new study in Nature Ecology and Evolution helps to uncover how they...</p>
-</div>
-<a class="events-list__btn" href="#single_event.html">招聘链接</a>
-</div>
-    <div class="events-list__info">
-        <p class="events-list__info-time">发布时间</p>
-        <p class="events-list__info-location">薪资水平</p>
-        <p class="events-list__info-location">工作地点</p>
-        <p class="events-list__info-location">最低学历</p>
-        <p class="events-list__info-location">工作经验</p>
-    </div>
-</div>
-<div class="events-list">
-<figure class="events-list__img">
-<a href="#single_event.html">
-<img src="../img/event_img_02.jpg" alt="">
-</a>
-</figure>
-<div class="events-list__info">
-<p class="events-list__info-date">15</p>
-<p class="events-list__info-month">September, 2017</p>
-<p class="events-list__info-time">9.00 AM - 4.00 PM</p>
-<p class="events-list__info-location">15 Eastern Road</p>
-</div>
-<div class="events-list__content">
-<h4 class="events-list__content-title">
-<a href="#single_event.html">Boost Your Teamworking Skills</a>
-</h4>
-<div class="events-list__content-text">
-<p>Around 1.2 million wildebeest travel through East Africa each year during their migration. The move—the largest overland migration on the planet—is necessary for their survival, helping them keep up with moving rainfall and find plentiful...</p>
-</div>
-<a class="events-list__btn" href="#single_event.html">招聘链接</a>
-</div>
-</div>
-<div class="events-list">
-<figure class="events-list__img">
-<a href="#single_event.html">
-<img src="../img/event_img_03.jpg" alt="">
-</a>
-</figure>
-<div class="events-list__info">
-<p class="events-list__info-date">19</p>
-<p class="events-list__info-month">September, 2017</p>
-<p class="events-list__info-time">9.00 AM - 9.00 PM</p>
-<p class="events-list__info-location">15 Hilton Street</p>
-</div>
-<div class="events-list__content">
-<h4 class="events-list__content-title">
-<a href="#single_event.html">Campus Tour 2017</a>
-</h4>
-
-<div class="events-list__content-text">
-<p>There are coffee shops, sports, restaurants and a multitude of great study spots. Whether you are a prospective student or already taking classes, feel free to explore and see what makes "the campus on the hill" so special...</p>
-</div>
-<a class="events-list__btn" href="#single_event.html">招聘链接</a>
-</div>
-</div>
-<div class="events-list">
-<figure class="events-list__img">
-<a href="#single_event.html">
-<img src="../img/event_img_04.jpg" alt="">
-</a>
-</figure>
-<div class="events-list__info">
-<p class="events-list__info-date">22</p>
-<p class="events-list__info-month">October, 2017</p>
-<p class="events-list__info-time">10.00 AM - 2.00 PM</p>
-<p class="events-list__info-location">15 Hilton Street</p>
-</div>
-<div class="events-list__content">
-<h4 class="events-list__content-title">
-<a href="#single_event.html">The Geographies of a Care-based Economy</a>
-</h4>
-
-<div class="events-list__content-text">
-<p>Our sun might have been born with a non-identical twin. Dubbed Nemesis, it would have orbited the same point as our own star before wandering off into the galaxy. Nemesis has never been found, but a new analysis...</p>
-</div>
-<a class="events-list__btn" href="#single_event.html">招聘链接</a>
-</div>
-</div>
-<div class="events-list">
-<figure class="events-list__img">
-<a href="#single_event.html">
-<img src="../img/event_img_05.jpg" alt="">
-</a>
-</figure>
-<div class="events-list__info">
-<p class="events-list__info-date">7</p>
-<p class="events-list__info-month">November, 2017</p>
-<p class="events-list__info-time">10.00 AM - 2.00 PM</p>
-<p class="events-list__info-location">1361 River Street</p>
-</div>
-<div class="events-list__content">
-<h4 class="events-list__content-title">
-<a href="#single_event.html">Build Education Website Using WordPress</a>
-</h4>
-<div class="events-list__content-text">
-<p>Most people think that climate change is real and is already impacting the world. But not many people think that climate change is affecting them. And that’s understandable when you’re focusing on impacts...</p>
-</div>
-<a class="events-list__btn" href="#single_event.html">招聘链接</a>
-</div>
-</div>
-<div class="events-list">
-<figure class="events-list__img">
-<a href="#single_event.html">
-<img src="../img/event_img_06.jpg" alt="">
-</a>
-</figure>
-<div class="events-list__info">
-<p class="events-list__info-date">10</p>
-<p class="events-list__info-month">December, 2017</p>
-<p class="events-list__info-time"> 9.00 AM - 3.00 PM</p>
-<p class="events-list__info-location">4261 Bridge Avenue</p>
-</div>
-<div class="events-list__content">
-<h4 class="events-list__content-title">
-<a href="#single_event.html">Winter Traditional Festival 2017</a>
-</h4>
-<div class="events-list__content-text">
-<p>Most people think that climate change is real and is already impacting the world. But not many people think that climate change is affecting them. And that’s understandable when you’re focusing on impacts...</p>
-</div>
-<a class="events-list__btn" href="#single_event.html">招聘链接</a>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-lg-12">
-<div class="events-pagination">
-<ul class="pagination-list">
-<li class="active">
-<a href="#events.html#">1</a>
-</li>
-<li>
-<a href="#events.html#">2</a>
-</li>
-<li>
-<a href="#events.html#">3</a>
-</li>
-<li>
-<a href="#events.html#">next</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
+                            <div class="events-list__content">
+                                <h4 class="events-list__content-title">
+                                    <a href="#single_event.html">{{items.workname}}</a>
+                                </h4>
+                                <h4 class="events-list__content-title">
+                                    <a href="#single_event.html">{{items.company}}</a>
+                                </h4>
+                                <div class="events-list__content-text quest">
+                                    <p>
+                                        {{items.introduce}}
+                                    </p>
+                                </div>
+                                <a class="events-list__btn" :href="items.link" target="_blank">招聘链接</a>
+                            </div>
+                            <div class="events-list__info">
+                                <p class="events-list__info-location">发布时间: {{items.modifytime.substring(0,10)}}</p>
+                                <p class="events-list__info-location">薪资水平: {{items.saray}}</p>
+                                <p class="events-list__info-location">工作地点: {{items.locationDetail}}</p>
+                                <p class="events-list__info-location">最低学历: {{items.education}}</p>
+                                <p class="events-list__info-location">工作经验: {{items.experience}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                分页<div class="row">-->
+<!--                    <div class="col-lg-12">-->
+<!--                        <div class="events-pagination">-->
+<!--                            <ul class="pagination-list">-->
+<!--                                <li class="active">-->
+<!--                                    <a href="#events.html#">1</a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="#events.html#">2</a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="#events.html#">3</a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="#events.html#">next</a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </main>
 
     <footer class="wrapp-footer">
         <div class="footer-box-01">
@@ -419,7 +311,8 @@
 <script src="../js/template.js"></script>
 
 <script src="../js/main.js"></script>
-
+<script src="../js/requestIp.js"></script>
+<script src="../js/pushJob.js"></script>
 
 
 </body></html>
