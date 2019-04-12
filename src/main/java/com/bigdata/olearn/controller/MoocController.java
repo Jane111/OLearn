@@ -19,12 +19,11 @@ import java.util.List;
 public class MoocController {
     @Autowired
     MoocServiceW moocServiceW;
-    @Autowired
-    BaseResponse br;
 
     //显示热点知识点，主要是课程搜索界面的那个玩意
     @RequestMapping(value="/getKnowledge")
     public BaseResponse getKnowledge(){
+        BaseResponse br=new BaseResponse();
         List<Record> data=moocServiceW.getKnowledge();
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
@@ -36,6 +35,7 @@ public class MoocController {
     public BaseResponse getCourseByKnowledge(
             @RequestParam(value = "clusterId")BigInteger clusterId
     ){
+        BaseResponse br=new BaseResponse();
         List<Record> data=moocServiceW.getCourseByKnowledge(clusterId);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
@@ -47,6 +47,7 @@ public class MoocController {
     public BaseResponse moocSearch(
             @RequestParam(value = "keyword",required = false)String keyword
     ){
+        BaseResponse br=new BaseResponse();
         List<Record> data=moocServiceW.searchMooc(keyword);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
@@ -55,6 +56,7 @@ public class MoocController {
     //显示课程详情
     @RequestMapping(value="/moocDetail")
     public BaseResponse moocDetail(BigInteger moocId){
+        BaseResponse br=new BaseResponse();
         Record data=moocServiceW.moocDetail(moocId);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
@@ -64,6 +66,7 @@ public class MoocController {
     //显示课程的目录
     @RequestMapping(value="/moocMenu")
     public BaseResponse moocMenu(BigInteger moocId){
+        BaseResponse br=new BaseResponse();
         List<Record> data=moocServiceW.moocMenu(moocId);
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
@@ -72,6 +75,7 @@ public class MoocController {
     //显示课程领域标签
     @RequestMapping(value="/showLabel")
     public BaseResponse showLabel(){
+        BaseResponse br=new BaseResponse();
         List<Record> data=moocServiceW.getLabel();
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
@@ -82,6 +86,7 @@ public class MoocController {
     public BaseResponse showKnowledgeGraph(
             @RequestParam(value = "fieldId")BigInteger fieldId
     ){
+        BaseResponse br=new BaseResponse();
         List<Record>data=moocServiceW.getCourse(fieldId);
         br.setData(data);
         br.setResult(ResultCodeEnum.SUCCESS);
@@ -92,6 +97,7 @@ public class MoocController {
     public BaseResponse showCourse(
             @RequestParam(value = "clusterId")BigInteger clusterId
     ){
+        BaseResponse br=new BaseResponse();
         List<Record>data=moocServiceW.getCourse(clusterId);
         br.setData(data);
         br.setResult(ResultCodeEnum.SUCCESS);
@@ -103,6 +109,7 @@ public class MoocController {
     public BaseResponse showCourseMenu(
             @RequestParam(value = "clusterId")BigInteger clusterId
     ){
+        BaseResponse br=new BaseResponse();
         List<Record>data=moocServiceW.getCourse(clusterId);
         br.setData(data);
         br.setResult(ResultCodeEnum.SUCCESS);

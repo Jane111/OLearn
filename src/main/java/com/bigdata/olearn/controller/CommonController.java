@@ -20,12 +20,11 @@ import java.util.stream.Collectors;
 public class CommonController {
     @Autowired
     CommonService commonService;
-    @Autowired
-    BaseResponse br;
 
     //课程聚类
     @RequestMapping(value="setMoocCluster")
     public BaseResponse setMoocCluster(){
+        BaseResponse br=new BaseResponse();
         List<Record> data=commonService.getMooc();
         ClusterAnalyzer<String> analyzer = new ClusterAnalyzer<String>();
         for(Record dRecord:data) {
@@ -58,6 +57,7 @@ public class CommonController {
     //抽取课程预备知识
     @RequestMapping(value="setPreStudyLabel")
     public BaseResponse setPreStudyLabel(){
+        BaseResponse br=new BaseResponse();
         List<Record> clusterList=commonService.getMoocCluster();
         for(Record cluster:clusterList) {
             String content=commonService.getClusterPre(cluster);
@@ -69,6 +69,7 @@ public class CommonController {
     //岗位聚类
     @RequestMapping(value="setWorkCluster")
     public BaseResponse setWorkCluster(){
+        BaseResponse br=new BaseResponse();
         List<Record> data=commonService.getWork();
         ClusterAnalyzer<String> analyzer = new ClusterAnalyzer<String>();
         for(Record dRecord:data) {
@@ -97,6 +98,7 @@ public class CommonController {
     //抽取岗位能力需求
     @RequestMapping(value="setWorkRequest")
     public BaseResponse setWorkRequest(){
+        BaseResponse br=new BaseResponse();
         List<Record> clusterList=commonService.getWorkCluster();
         for(Record cluster:clusterList) {
             String content=commonService.getClusterRequest(cluster);

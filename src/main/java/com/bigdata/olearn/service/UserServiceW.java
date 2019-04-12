@@ -24,9 +24,11 @@ public class UserServiceW {
                schedule.setMoocName(moocLinkCluster.getTitle());
                schedule.setRank(moocLinkCluster.getRank());
                schedule.setClusterId(moocLinkCluster.getClusterId());
+               schedule.setClassname(moocLinkCluster.getClassname());
                schedule.setMenuId(moocMenu.getMoocId());
                schedule.setSequence(moocMenu.getSequence());
                schedule.setLesson(moocMenu.getLesson());
+               schedule.setStatus(0);
                schedule.save();
            }
        }
