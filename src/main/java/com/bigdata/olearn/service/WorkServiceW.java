@@ -1,6 +1,7 @@
 package com.bigdata.olearn.service;
 
 import com.bigdata.olearn.model.Ability;
+import com.bigdata.olearn.model.Work;
 import com.bigdata.olearn.model.WorkCluster;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -38,5 +39,14 @@ public class WorkServiceW {
             canDo.add(workCluster);
         }
         return  canDo;
+    }
+
+    public List<Work> getWorkRecommend(List<WorkCluster> data){
+        List<Work> works=new ArrayList<>();
+        for(WorkCluster workCluster :data){
+            List<Work> workList=Work.dao.find("SELECT * FROM work WHERE cluster_id=? LIMIT 0,5",workCluster.getId());
+            works.addAll(workList);
+        }
+        return  works;
     }
 }
