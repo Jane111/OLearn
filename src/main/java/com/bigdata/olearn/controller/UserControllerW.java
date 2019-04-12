@@ -34,7 +34,7 @@ public class UserControllerW {
     @RequestMapping(value="/addCourseToPath")
     public BaseResponse addCourseToPath(
             @RequestParam(value = "userId")BigInteger userId,
-            @RequestParam(value = "moocId")BigInteger[] moocId,
+            @RequestParam(value = "moocId[]")BigInteger[] moocId,
             @RequestParam(value = "clusterId")BigInteger clusterId,
             @RequestParam(value = "theMinRank")Integer theMinRank
     ){
