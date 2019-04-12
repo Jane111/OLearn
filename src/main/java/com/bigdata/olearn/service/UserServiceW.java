@@ -100,7 +100,7 @@ public class UserServiceW {
         if(ability.getRank()<theMinRank){
             return;
         }
-       Db.update("UPDATE ability SET rank=? WHERE cluster_id=? AND user_id=?",theMinRank,clusterId,userId);
+       Db.update("UPDATE ability SET rank=? WHERE cluster_id=? AND user_id=?",theMinRank+1,clusterId,userId);
 
     }
 
@@ -126,7 +126,7 @@ public class UserServiceW {
             if(schedule!=null){
                 if(schedule.getStatus()==1){
                     //该用户已经达到此层级，可以修改用户此能力级别
-                    Db.update("UPDATE ability SET rank=? WHERE user_id=? AND cluster_id=?",schedule.getRank(),userId,moocLinkCluster.getClusterId());
+                    Db.update("UPDATE ability SET rank=? WHERE user_id=? AND cluster_id=?",schedule.getRank()+1,userId,moocLinkCluster.getClusterId());
                     break;
                 }
             }
