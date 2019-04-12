@@ -1,0 +1,1 @@
+window.requestIp = "http://localhost:8080/";

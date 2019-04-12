@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066) -->
+<html class="history svg video supports boxshadow csstransforms3d csstransitions backgroundcliptext webkit chrome win js sticky-header-enabled"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- Basic -->
+		
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">	
+
+		<title>User Profile | Porto - Responsive HTML5 Template 7.4.0</title>	
+
+		<meta name="keywords" content="HTML5 Template">
+		<meta name="description" content="Porto - Responsive HTML5 Template">
+		<meta name="author" content="okler.net">
+
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="../img/logo_white.png" type="image/x-icon">
+		<link rel="apple-touch-icon" href="../img/logo_white.png">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+		<!-- Web Fonts  -->
+		<link href="./personal_files/css" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="./personal_files/bootstrap.min.css">		<link rel="stylesheet" href="./personal_files/all.min.css">		<link rel="stylesheet" href="./personal_files/animate.min.css">		<link rel="stylesheet" href="./personal_files/simple-line-icons.min.css">		<link rel="stylesheet" href="./personal_files/owl.carousel.min.css">		<link rel="stylesheet" href="./personal_files/owl.theme.default.min.css">		<link rel="stylesheet" href="./personal_files/magnific-popup.min.css">
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="./personal_files/theme.css">
+		<link rel="stylesheet" href="./personal_files/theme-elements.css">
+		<link rel="stylesheet" href="./personal_files/theme-blog.css">
+		<link rel="stylesheet" href="./personal_files/theme-shop.css">
+		
+		<!-- Demo CSS -->
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.min.css">
+
+		<link rel="stylesheet" href="../css/style.css">
+		<!--LayUI -->
+		<link rel="stylesheet" href="../plugin/layui/css/layui.css"/>
+
+		<link rel="stylesheet" href="../css/templete.css"/>
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="./personal_files/default.css">		<script async="" src="./personal_files/analytics.js"></script><script src="./personal_files/style.switcher.localstorage.js"></script><style type="text/css"></style> 
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="./personal_files/custom.css">
+
+		<!-- Head Libs -->
+		<script src="./personal_files/modernizr.min.js"></script>
+
+		<!--vis network-->
+		<link href="../../css/vis-network.min.css" rel="stylesheet" type="text/css"/>
+
+	<link rel="stylesheet" href="./personal_files/style-switcher.css">
+	<style>
+		ul.nav-list li > a.active {
+			font-weight: bold;
+			color: #a0ce4e;
+		}
+		.network {
+			width: 800px;
+			height: 700px;
+			border: 1px solid lightgray;
+			background-color: #fff;
+		}
+	</style>
+</head>
+	<body>
+
+		<div class="body">
+			<header class="wrapp-header">
+				<div class="main-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12 text-center">
+								<div class="main-nav__btn">
+									<div class="icon-left"></div>
+									<div class="icon-right"></div>
+								</div>
+								<div class="search-block">
+									<button class="search-btn">Search</button>
+									<form action="https://livewp.site/html/smartedu/" class="search-block__form">
+										<input class="search-block__form-text" type="text" name="search-name" placeholder="输入课程名">
+									</form>
+								</div>
+								<ul class="main-nav__list sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+									<li class="">
+										<!--
+                                        class="sf-with-ul"    下拉菜单
+                                        -->
+										<a href="./index.html">首页</a>
+									</li>
+									<li class="">
+										<a href="./knowledge_graph.html">知识图谱</a>
+									</li>
+									<li class="">
+										<a href="./courses.html">课程搜索</a>
+									</li>
+									<li>
+										<a href="#">平台介绍</a>
+									</li>
+									<li class="active">
+										<a href="#">个人中心</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			<div role="main" class="main">
+
+				<div class="container py-2">
+
+					<div class="row">
+						<div class="col-lg-3 mt-4 mt-lg-0">
+
+<!--			头像				<div class="d-flex justify-content-center mb-4">-->
+<!--								<div class="profile-image-outer-container">-->
+<!--									<div class="profile-image-inner-container bg-color-primary">-->
+<!--										<img src="./personal_files/avatar.jpg">-->
+<!--										<span class="profile-image-button bg-color-dark">-->
+<!--											<i class="fas fa-camera text-light"></i>-->
+<!--										</span>-->
+<!--									</div>-->
+<!--									<input type="file" id="file" class="profile-image-input">-->
+<!--								</div>-->
+<!--							</div>-->
+
+							<aside class="sidebar mt-2" id="sidebar">
+								<ul class="nav nav-list flex-column mb-5">
+									<li class="nav-item"><a class="nav-link  active" href="#" >我的知识图谱</a></li>
+								</ul>
+							</aside>
+
+						</div>
+						<div class="col-lg-9" id="graph_vue_box">
+								<div id="network_id" class="network"></div><!-- 拓扑图容器-->
+						</div>
+<!--						<div class="col-lg-9">-->
+
+<!--							<div class="overflow-hidden mb-1">-->
+<!--								<h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">My</strong> Profile</h2>-->
+<!--							</div>-->
+<!--							<div class="overflow-hidden mb-4 pb-3">-->
+<!--								<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+<!--							</div>-->
+
+<!--							<form role="form" class="needs-validation" novalidate="novalidate">-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">First name</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" required="" type="text" value="John">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">Last name</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" required="" type="text" value="Doe">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">Email</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" required="" type="email" value="email@gmail.com">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">Company</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" type="text" value="">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">Website</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" type="url" value="">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">Address</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" type="text" value="" placeholder="Street">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2"></label>-->
+<!--							        <div class="col-lg-6">-->
+<!--							            <input class="form-control" type="text" value="" placeholder="City">-->
+<!--							        </div>-->
+<!--							        <div class="col-lg-3">-->
+<!--							            <input class="form-control" type="text" value="" placeholder="State">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">Time Zone</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <select id="user_time_zone" class="form-control" size="0">-->
+<!--							                <option value="Hawaii">(GMT-10:00) Hawaii</option>-->
+<!--							                <option value="Alaska">(GMT-09:00) Alaska</option>-->
+<!--							                <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>-->
+<!--							                <option value="Arizona">(GMT-07:00) Arizona</option>-->
+<!--							                <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>-->
+<!--							                <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>-->
+<!--							                <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>-->
+<!--							                <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>-->
+<!--							            </select>-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">Username</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" required="" type="text" value="">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">Password</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" required="" type="password" value="">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">Confirm password</label>-->
+<!--							        <div class="col-lg-9">-->
+<!--							            <input class="form-control" required="" type="password" value="">-->
+<!--							        </div>-->
+<!--							    </div>-->
+<!--							    <div class="form-group row">-->
+<!--									<div class="form-group col-lg-9">-->
+<!--										-->
+<!--									</div>-->
+<!--									<div class="form-group col-lg-3">-->
+<!--										<input type="submit" value="Save" class="btn btn-primary btn-modern float-right" data-loading-text="Loading...">-->
+<!--									</div>-->
+<!--							    </div>-->
+<!--							</form>-->
+
+<!--						</div>-->
+					</div>
+
+				</div>
+
+			</div>
+			<footer class="wrapp-footer">
+				<div class="footer-box-01">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-3 col-md-3 col-lg-3">
+								<a href="#" class="footer-logo">
+									<img src="../img/logo_white.png" alt="">
+								</a>
+								<ul class="widget-contact">
+									<li>
+										<h4 class="widget-contact__title">智能化能力培养平台</h4>
+									</li>
+								</ul>
+							</div>
+							<div class="col-sm-3 col-md-3 col-lg-3">
+								<div class="widget-link">
+									<h3 class="widget-title">快速链接</h3>
+									<div style="display: flex;justify-content: space-between">
+										<ul class="widget-list">
+											<li>
+												<a href="./knowledge_graph.html">知识图谱</a>
+											</li>
+											<li>
+												<a href="#">课程搜索</a>
+											</li>
+										</ul>
+										<ul class="widget-list">
+											<li>
+												<a href="#">平台介绍</a>
+											</li>
+											<li>
+												<a href="#">个人中心</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer-box-02">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<p class="copy-info">Copyright © 2013 - 2019 </p>
+								<p class="copy-info">O'Learn智能化能力培养平台. All Rights Reserved</p>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<a href="https://livewp.site/html/smartedu/index_02.html#" class="back2top" title="Back to Top" style="display: none; bottom: 30px;">Back to Top</a>
+			</footer>
+		</div>
+
+		<!-- Vendor -->
+
+
+
+		<!--LayUI -->
+		<script src="../plugin/layui/layui.js"></script>
+
+		<!--Vue-->
+		<script src="../plugin/vue/vue.js"></script>
+		<script src="../plugin/vue/vue-resource.js"></script>
+
+		<script type="text/javascript" src="../../js/vis.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../../js/layer.js"></script>
+		<script src="../js/personal.js"></script>
+
+</body></html>

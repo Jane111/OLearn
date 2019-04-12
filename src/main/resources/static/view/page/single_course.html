@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052) -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Smart education | Single course</title>
+
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="shortcut icon" href="../img/logo_white.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../img/logo_white.png">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!--LayUI -->
+    <link rel="stylesheet" href="../plugin/layui/css/layui.css"/>
+
+    <link rel="stylesheet" href="../css/templete.css"/>
+</head>
+<body>
+<!--[if lt IE 9]>
+			<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+<div class="wrapp-content">
+
+    <header class="wrapp-header">
+        <div class="info-box-01">
+            <div class="container" style="width:100%;padding-left: 35px;padding-right: 35px;">
+                <div class="row" style="display: flex;align-items: center;">
+                    <div class="col-sm-4 col-md-4 col-lg-4 text-sm-center">
+                        <a href="#" class="logo">
+                            <img src="../img/logo_white.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8 text-sm-center text-right">
+                        <div class="contact-block-01" id="login_register_vue">
+                            <a class="login_regester_btn"  style="margin-right: 10px;cursor:pointer" @click="login">登录</a>
+                            <a class="login_regester_btn"  style="cursor:pointer" @click="register">注册</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-nav">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="main-nav__btn">
+                            <div class="icon-left"></div>
+                            <div class="icon-right"></div>
+                        </div>
+                        <div class="search-block">
+                            <button class="search-btn">Search</button>
+                            <form action="https://livewp.site/html/smartedu/" class="search-block__form">
+                                <input class="search-block__form-text" type="text" name="search-name" placeholder="输入课程名">
+                            </form>
+                        </div>
+                        <ul class="main-nav__list sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                            <li class="">
+                                <!--
+                                class="sf-with-ul"    下拉菜单
+                                -->
+                                <a href="./index.html">首页</a>
+                            </li>
+                            <li class="">
+                                <a href="./knowledge_graph.html">知识图谱</a>
+                            </li>
+                            <li class="">
+                                <a href="./courses.html">课程搜索</a>
+                            </li>
+                            <li>
+                                <a href="#">平台介绍</a>
+                            </li>
+                            <li>
+                                <a href="./personal.html">个人中心</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-row" id="vue_box">
+        <div class="content-box-01 single-course">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <figure class="single-course-img">
+                            <img :src="imgUrl" alt="课程图片">
+                        </figure>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="single-course__star-list">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="single-course__info-list">
+                            <li>
+                                <p class="seats">{{people}}</p>
+                            </li>
+                        </ul>
+                        <div class="single-course__wrapp">
+                            <h2 class="single-course__title">{{title}}</h2>
+                        </div>
+                        <div class="tabs single-course-tabs">
+                            <ul class="tabs__caption">
+                                <li :class="activate0 ?  'active' : ''" @click="change" data-activateindex="0">课程简介</li>
+                                <li :class="activate1 ?  'active' : ''" @click="change" data-activateindex="1">课程目录</li>
+                                <li :class="activate2 ?  'active' : ''" @click="change" data-activateindex="2">授课教师</li>
+                            </ul>
+                            <div :class="['tabs__content', activate0 ?  'active' : '']">
+                                <p>{{introduce}}</p>
+                            </div>
+                            <div :class="['tabs__content', activate1 ?  'active' : '']">
+                                <ul class="curriculum-list">
+                                    <li>
+                                        <ul>
+                                            <li v-for="item in menuList">
+                                                <div class="curriculum-list__box">
+                                                    <span class="curriculum-list__title-02">{{item.columns.sequence}}.</span> {{item.columns.lesson}}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div :class="['tabs__content', activate2 ?  'active' : '']">
+                                <div class="teachers-wrapp">
+                                    <div class="row">
+                                        <!--<div class="col-sm-4 col-md-4 col-lg-4">-->
+                                        <!--<figure class="teachers__img">-->
+                                        <!--<img src="../img/course_02.jpg" alt="">-->
+                                        <!--</figure>-->
+                                        <!--</div>-->
+                                        <div class="col-sm-8 col-md-8 col-lg-8">
+                                            <div class="teachers__box-01">
+                                                <h4 class="teachers__title">{{professor}}</h4>
+                                            </div>
+                                            <p class="teachers__subtitle">{{institute}}</p>
+                                            <div class="teachers__content">
+                                                <p>{{quto}}</p>
+                                            </div>
+                                            <a class="teachers__btn" :href="title_url" target="_blank">课程链接</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--<div class="row">-->
+                <!--<div class="col-lg-12">-->
+                <!--<div class="reply-form">-->
+                <!--<h3 class="reply-form__title">Leave a Comment</h3>-->
+                <!--<form action="https://livewp.site/html/smartedu/" class="reply-form__form">-->
+                <!--<div class="reply-form__box-01">-->
+                <!--<input class="reply-form__name" type="text" name="login" placeholder="Name *">-->
+                <!--</div>-->
+                <!--<div class="reply-form__box-02">-->
+                <!--<input class="reply-form__email" type="email" name="login" placeholder="Email *">-->
+                <!--</div>-->
+                <!--<div class="reply-form__box-03">-->
+                <!--<input class="reply-form__url" type="url" name="website" placeholder="Website">-->
+                <!--</div>-->
+                <!--<div class="reply-form__box-04">-->
+                <!--<textarea class="reply-form__message" name="message" cols="30" rows="10" placeholder="Message..."></textarea>-->
+                <!--</div>-->
+                <!--<div class="reply-form__box-05">-->
+                <!--<button class="btn-01" type="submit">Post comment</button>-->
+                <!--</div>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </main>
+
+    <footer class="wrapp-footer">
+        <div class="footer-box-01">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <a href="#" class="footer-logo">
+                            <img src="../img/logo_white.png" alt="">
+                        </a>
+                        <ul class="widget-contact">
+                            <li>
+                                <h4 class="widget-contact__title">智能化能力培养平台</h4>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <div class="widget-link">
+                            <h3 class="widget-title">快速链接</h3>
+                            <div style="display: flex;justify-content: space-between">
+                                <ul class="widget-list">
+                                    <li>
+                                        <a href="./knowledge_graph.html">知识图谱</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">课程搜索</a>
+                                    </li>
+                                </ul>
+                                <ul class="widget-list">
+                                    <li>
+                                        <a href="#">平台介绍</a>
+                                    </li>
+                                    <li>
+                                        <a href="./personal.html">个人中心</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-box-02">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <p class="copy-info">Copyright © 2013 - 2019 </p>
+                        <p class="copy-info">O'Learn智能化能力培养平台. All Rights Reserved</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <a href="https://livewp.site/html/smartedu/index_02.html#" class="back2top" title="Back to Top" style="display: none; bottom: 30px;">Back to Top</a>
+    </footer>
+</div>
+
+<div id="loginModal" class="layui-form layui-form-pane login_register_vue login_regester_style" style="display: none">
+    <div class="login_regester_row">
+        <i class="layui-form-label layui-icon layui-icon-username  " style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i> <input type="text"  required  placeholder="请输入邮箱" class="layui-input login_regester_input">
+    </div>
+    <div class="login_regester_row">
+        <i class="layui-form-label layui-icon layui-icon-password" style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i><input type="password"  required  placeholder="请输入密码" class="layui-input login_regester_input">
+    </div>
+    <button class="layui-btn modal_btn">登录</button>
+    <p style="width: 77%">没有帐号?<span style="cursor:pointer;color: #a0ce4e;" @click="goToRegister">立即注册</span></p>
+</div>
+
+<div id="registerModal" class="layui-form layui-form-pane login_register_vue login_regester_style" style="display: none">
+    <div class="login_regester_row">
+        <i class="layui-form-label layui-icon layui-icon-friends " style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i> <input type="text"  required  placeholder="请输入用户名" class="layui-input login_regester_input">
+    </div>
+    <div class="login_regester_row">
+        <i class="layui-form-label layui-icon layui-icon-username  " style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i> <input type="text"  required  placeholder="请输入邮箱" class="layui-input login_regester_input">
+    </div>
+    <div class="login_regester_row">
+        <i class="layui-form-label layui-icon layui-icon-password" style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i><input type="password"  required  placeholder="请设置密码" class="layui-input login_regester_input">
+    </div>
+    <div class="login_regester_row">
+        <i class="layui-form-label layui-icon layui-icon-password" style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i><input type="password"  required  placeholder="请确认密码" class="layui-input login_regester_input">
+    </div>
+    <button class="layui-btn modal_btn">注册</button>
+    <p style="width: 77%">已有帐号?<span style="cursor:pointer;color: #a0ce4e;" @click="goToLogin">立即登录</span></p>
+</div>
+
+<script src="../plugin/jquery-2.2.4.min.js"></script>
+
+<script src="../plugin/jquery.superfish.min.js"></script>
+
+<script src="../js/main.js"></script>
+<!--LayUI -->
+<script src="../plugin/layui/layui.js"></script>
+
+<!--Vue-->
+<script src="../plugin/vue/vue.js"></script>
+<script src="../plugin/vue/vue-resource.js"></script>
+<script src="../js/template.js"></script>
+<script src="../js/requestIp.js"></script>
+<script src="../js/single_course.js"></script>
+</body></html>
