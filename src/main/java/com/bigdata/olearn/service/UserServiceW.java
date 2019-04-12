@@ -126,7 +126,7 @@ public class UserServiceW {
             if(schedule!=null){
                 if(schedule.getStatus()==1){
                     //该用户已经达到此层级，可以修改用户此能力级别
-                    Db.update("UPDATE ability SET rank=? WHERE user_id=? AND cluster_id=?",userId,moocLinkCluster.getClusterId());
+                    Db.update("UPDATE ability SET rank=? WHERE user_id=? AND cluster_id=?",schedule.getRank(),userId,moocLinkCluster.getClusterId());
                     break;
                 }
             }
