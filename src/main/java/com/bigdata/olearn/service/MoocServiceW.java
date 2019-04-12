@@ -9,6 +9,14 @@ import java.util.List;
 
 @Service
 public class MoocServiceW {
+    //得到热点知识点
+    public List<Record> getKnowledge(){return Db.find("SELECT * FROM mooc_cluster");}
+
+    public List<Record> getCourseByKnowledge(BigInteger clusterId){
+        return Db.find("SELECT mooc.mooc_id,mooc.title,mooc.introduce,mooc.people,mooc.professor,picture " +
+                "FROM mooc_link_cluster LEFT JOIN mooc on mooc_link_cluster.mooc_id=mooc.mooc_id WHERE cluster_id=?",clusterId);
+    }
+
     //搜索课程数据
     public List<Record> searchMooc(String keyword){
         return Db.find("SELECT mooc_id,title,picture,institute,people,professor FROM mooc WHERE title like '%"+keyword+"%' OR institute like '%"+keyword+"%'");

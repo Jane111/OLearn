@@ -1,5 +1,6 @@
 package com.bigdata.olearn.controller;
 
+import com.bigdata.olearn.model.User;
 import com.bigdata.olearn.service.UserServiceW;
 import com.bigdata.olearn.util.BaseResponse;
 import com.bigdata.olearn.util.ResultCodeEnum;
@@ -88,5 +89,29 @@ public class UserControllerW {
         return br;
     }
     //todo：注册
+    @RequestMapping(value="/register")
+    public BaseResponse register(
+            @RequestParam(value = "nickname") String nickname,
+            @RequestParam(value = "mail") String mail,
+            @RequestParam(value = "password") String password
+    ){
+        ResultCodeEnum result = userServiceW.register(nickname,mail,password);
+        br.setResult(result);
+        return br;
+    }
     //todo：登录
+    @RequestMapping(value="/login")
+    public BaseResponse login(
+            @RequestParam(value = "mail") String mail,
+            @RequestParam(value = "password") String password
+    ){
+        User user = userServiceW.login(mail,password);
+        if(user==null){
+            br.setResult(ResultCodeEnum.ERROR_ACCOUNT_OR_PASSWORD);
+        }else {
+            br.setData(user);
+            br.setResult(ResultCodeEnum.SUCCESS);
+        }
+        return br;
+    }
 }

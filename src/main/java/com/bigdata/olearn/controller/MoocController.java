@@ -22,6 +22,26 @@ public class MoocController {
     @Autowired
     BaseResponse br;
 
+    //显示热点知识点，主要是课程搜索界面的那个玩意
+    @RequestMapping(value="/getKnowledge")
+    public BaseResponse getKnowledge(){
+        List<Record> data=moocServiceW.getKnowledge();
+        br.setResult(ResultCodeEnum.SUCCESS);
+        br.setData(data);
+        return br;
+    }
+
+    //点击知识标签，显示热点课程
+    @RequestMapping(value="/getCourseByKnowledge")
+    public BaseResponse getCourseByKnowledge(
+            @RequestParam(value = "clusterId")BigInteger clusterId
+    ){
+        List<Record> data=moocServiceW.getCourseByKnowledge(clusterId);
+        br.setResult(ResultCodeEnum.SUCCESS);
+        br.setData(data);
+        return br;
+    }
+
     //课程搜索
     @RequestMapping(value="/moocSearch")
     public BaseResponse moocSearch(

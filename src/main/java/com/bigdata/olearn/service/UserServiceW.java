@@ -1,6 +1,7 @@
 package com.bigdata.olearn.service;
 
 import com.bigdata.olearn.model.*;
+import com.bigdata.olearn.util.ResultCodeEnum;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import org.springframework.stereotype.Service;
@@ -135,5 +136,20 @@ public class UserServiceW {
     //显示某个用户的能力标签
     public List<Record> showMyLabel(BigInteger userId){
         return Db.find("SELECT * FROM ability WHERE user_id=?",userId);
+    }
+
+    public ResultCodeEnum register(String nickname,String mail,String password){
+        User user=User.dao.findFirst("SELECT * FROM user WHERE mail=? AND password=?",mail,password);
+        if(user==null){
+            return  ResultCodeEnum.EXIST_USER;
+        }else {
+            Db.update("INSERT INTO user(nickname,mail,password) VALUES (?,?,?)",nickname,mail,password);
+            return ResultCodeEnum.SUCCESS;
+        }
+    }
+
+    public User login(String mail,String password){
+        User user=User.dao.findFirst("SELECT * FROM user WHERE mail=? AND password=?",mail,password);
+        return user;
     }
 }

@@ -105,7 +105,6 @@ public class CommonController {
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
-    //todo:岗位推荐
 
     //todo：课程推荐
 
