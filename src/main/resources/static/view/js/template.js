@@ -64,7 +64,7 @@ layui.use('layer', function(){
 const vue1 = new Vue({
     el: "#login_register_vue",
     data:{
-
+        isShow: true
     },
     methods: {
         login() {
@@ -91,7 +91,8 @@ const vue1 = new Vue({
 const vue2 = new Vue({
     el: "#loginModal",
     data:{
-
+        user: '',
+        password: ''
     },
     methods: {
         goToRegister(){
@@ -103,6 +104,14 @@ const vue2 = new Vue({
                 area:'650px',
                 shade: [0.7]
             })
+        },
+        setWords(){
+            this.user = 'cyq@syzc.net.cn'
+            this.password = '000000'
+        },
+        login(){
+            vue1.isShow = false
+            layer.closeAll("page")
         }
     }
 

@@ -272,11 +272,14 @@ public class Neo4jServiceL {
         return pointNodeRepository.getPreviousPointByPNameId(pNameId);
     }
 
-
     //3、得到用户图谱中一个知识点的所有先导知识点，判断其状态是否有正在学习的，用于提示。
     public String getUserPreviousPoint(Long pNameId)
     {
         List<UserPointNode> userPointNodeList = userPointNodeRepository.getUserPreviousPointByPNameId(pNameId);
+        if(userPointNodeList.isEmpty())
+        {
+            return null;
+        }
         String learningPoint = "";
         for(UserPointNode upn:userPointNodeList)
         {
@@ -285,7 +288,7 @@ public class Neo4jServiceL {
                 learningPoint+=upn.getpName()+",";
             }
         }
-        return learningPoint.substring(1,learningPoint.length()-1);
+        return learningPoint.substring(0,learningPoint.length()-1);
     }
 
     //得到知识点集合中的最初节点
@@ -314,11 +317,29 @@ public class Neo4jServiceL {
         }
     }
 
+    //将知识点的状态改为学习完成
+    public void setPointFinish(Long pNameId)
+    {
+       userPointNodeRepository.setUserPointFinished(pNameId);
+    }
+
     //将知识点设为正在学习
     public void setPointLearning(Long pNameId)
     {
-        userPointNodeRepository.setUserPointLearning(pNameId);
+        //分为有后续知识和无后续知识点的情况
+        //如果有后续知识，则将后续知识设为推荐学习
+        //得到一个知识点的后续知识点，用于推荐知识点
+        List<PointNode> backPointList = pointNodeRepository.getBackPointByPNameId(pNameId);
+        if(backPointList.isEmpty())
+        {
+            userPointNodeRepository.setSoloUserPointLearning(pNameId);
+        }
+        else
+        {
+            userPointNodeRepository.setUserPointLearning(pNameId);
+        }
     }
+
 
 
 

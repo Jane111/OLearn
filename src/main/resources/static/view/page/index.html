@@ -40,7 +40,7 @@
 	</a>
 </div>
 <div class="col-sm-8 col-md-8 col-lg-8 text-sm-center text-right">
-<div class="contact-block-01" id="login_register_vue">
+<div class="contact-block-01" v-if="isShow" id="login_register_vue">
 	<a class="login_regester_btn"  style="margin-right: 10px;cursor:pointer" @click="login">登录</a>
 	<a class="login_regester_btn"  style="cursor:pointer" @click="register">注册</a>
 </div>
@@ -628,13 +628,14 @@
 </footer>
 </div>
 <div id="loginModal" class="layui-form layui-form-pane login_register_vue login_regester_style" style="display: none">
+	<div class="login_regester_row" style="cursor:pointer;color: #a0ce4e;" @click="setWords">快捷键入</div>
 	<div class="login_regester_row">
-		<i class="layui-form-label layui-icon layui-icon-username  " style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i> <input type="text"  required  placeholder="请输入邮箱" class="layui-input login_regester_input">
+		<i class="layui-form-label layui-icon layui-icon-username  " style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i> <input type="text"  required  placeholder="请输入邮箱" v-model="user" class="layui-input login_regester_input">
 	</div>
 	<div class="login_regester_row">
-		<i class="layui-form-label layui-icon layui-icon-password" style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i><input type="password"  required  placeholder="请输入密码" class="layui-input login_regester_input">
+		<i class="layui-form-label layui-icon layui-icon-password" style="font-size: 20px;width: 7%;padding: 8px;box-sizing: border-box;"></i><input type="password"  required  placeholder="请输入密码"  v-model="password"  class="layui-input login_regester_input">
 	</div>
-	<button class="layui-btn modal_btn">登录</button>
+	<button class="layui-btn modal_btn" @click="login">登录</button>
 	<p style="width: 77%">没有帐号?<span style="cursor:pointer;color: #a0ce4e;" @click="goToRegister">立即注册</span></p>
 </div>
 

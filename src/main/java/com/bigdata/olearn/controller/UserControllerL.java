@@ -2,6 +2,7 @@ package com.bigdata.olearn.controller;
 
 import com.bigdata.olearn.model.MoocCluster;
 import com.bigdata.olearn.model.UserLinkField;
+import com.bigdata.olearn.model.UserLinkWork;
 import com.bigdata.olearn.model.WorkCluster;
 import com.bigdata.olearn.neo.PointNode;
 import com.bigdata.olearn.neo.PreviousRelationship;
@@ -33,14 +34,14 @@ public class UserControllerL {
     @Autowired
     UserPointNodeRepository upnp;
 
-    @GetMapping("getMapByArea")//得到某个领域的知识图谱
+    @RequestMapping("getMapByArea")//得到某个领域的知识图谱
     public Map<String, Object> getMapByArea(
             @RequestParam("areaId") BigInteger areaId
     ){
         return neo4jServiceL.getMapByArea(areaId);
     }
     //用户是否拥有该领域的知识图谱
-    @GetMapping("/userHasAreaMap")
+    @RequestMapping("/userHasAreaMap")
     public BaseResponse userHasAreaMap(
             @RequestParam("areaId") BigInteger areaId,
             @RequestParam("uId") BigInteger uId
@@ -50,38 +51,58 @@ public class UserControllerL {
                 "where field_id=? AND user_id=?",areaId,uId);
         if(userLinkField==null)
         {
-            br.setData("false");
+            br.setData(false);
         }else
         {
-            br.setData("true");
+            br.setData(true);
         }
         return br;
     }
-    //todo 用户是否添加为目标岗位
-    public BaseResponse userHasSetJob()
+    //用户是否添加为目标岗位
+    @RequestMapping("/userHasSetJob")
+    public BaseResponse userHasSetJob(
+            @RequestParam("jId") BigInteger jId,
+            @RequestParam("uId") BigInteger uId
+    )
     {
+        UserLinkWork userLinkWork = UserLinkWork.dao.findFirst("select * from user_link_work " +
+                "where work_cluster_id=? AND user_id=?",jId,uId);
+        if(userLinkWork==null)
+        {
+            br.setData(false);
+        }else
+        {
+            br.setData(true);
+        }
         return br;
     }
 
+
     //在添加知识点之前首先提示用户，是否学完其前导课程
     //如果没有用户知识图谱时加入知识点，询问所有的前导节点；建议在用户进入领域知识图谱页面时得到一个状态status
-    @GetMapping("/getPreviousPoint")
-    public String getPreviousPoint(
+    @RequestMapping("/getPreviousPoint")
+    public BaseResponse getPreviousPoint(
             @RequestParam("pNameId") Long pNameId
     )
     {
          List<PointNode> nodesList = neo4jServiceL.getPreviousPoint(pNameId);
+         if(nodesList.isEmpty())
+         {
+             br.setData(null);
+             return br;
+         }
          String previousHint = "";
          for(PointNode pn:nodesList)
          {
              previousHint+=pn.getpName()+",";
          }
-         return previousHint.substring(0,previousHint.length()-1);
+         br.setData(previousHint.substring(0,previousHint.length()-1));
+         return br;
     }
 
     //在添加知识点之前首先提示用户，是否学完其前导课程
     //如果在有用户图谱时加入知识点，则提示是否已经选取该节点以及前导节点的状态
-    @GetMapping("/getUserPreviousPoint")
+    @RequestMapping("/getUserPreviousPoint")
     public String getUserPreviousPoint(
             @RequestParam("pNameId") Long pNameId
     )
@@ -91,11 +112,12 @@ public class UserControllerL {
 
 
     //用户将某个岗位设为目标岗位
-    @GetMapping("/addJobPointToUserMap")
-    public void addJobPointToUserMap(
+    @RequestMapping("/addJobPointToUserMap")
+    public BaseResponse addJobPointToUserMap(
             @RequestParam("uId") BigInteger uId,//用户id
             @RequestParam("pNameIdList") String pNameIdList,//知识点Id,因为岗位对应的知识点的获取比较麻烦，直接由前端传过来
-            @RequestParam("areaId") BigInteger areaId//领域Id
+            @RequestParam("areaId") BigInteger areaId,//领域Id
+            @RequestParam("jId") BigInteger jId
     ){
         UserLinkField userLinkField = UserLinkField.dao.findFirst("select * from user_link_field " +
                 "where field_id=? AND user_id=?",areaId,uId);
@@ -106,10 +128,14 @@ public class UserControllerL {
             newUserLinkField.setFieldId(areaId);
             newUserLinkField.setUserId(uId);
             newUserLinkField.save();
-            //todo 在关系型数据库中加入用户-岗位记录,目标岗位不可以再添加，限制“加入目标岗位”按钮的使用
             //在图数据库中生成用户图谱
             neo4jServiceL.createMapForUser(uId,areaId);
         }
+        //在关系型数据库中加入用户-岗位记录,目标岗位不可以再添加，限制“加入目标岗位”按钮的使用
+        UserLinkWork userLinkWork=new UserLinkWork();
+        userLinkWork.setWorkClusterId(jId);
+        userLinkWork.setUserId(uId);
+        userLinkWork.save();
        //岗位节点集合中的开始节点
         List<Long> beginNodePNameId = neo4jServiceL.getBeginNodeByPNameIdList(pNameIdList);
         for(Long pNameId:beginNodePNameId)
@@ -124,16 +150,18 @@ public class UserControllerL {
             }
 
         }
+        br.setResult(ResultCodeEnum.SUCCESS);
+        return br;
     }
 
-    @GetMapping("/addPointToUserMap")
+    @RequestMapping("/addPointToUserMap")
     public BaseResponse addPointToUserMap(
             @RequestParam("uId") BigInteger uId,//用户id
             @RequestParam("pNameId") BigInteger pNameId//知识点Id
     ) {
         BigInteger areaId = MoocCluster.dao.findById(pNameId).getFieldId();//由知识点得到对应的领域
         UserLinkField userLinkField = UserLinkField.dao.findFirst("select * from user_link_field " +
-                "where field_id=? AND user_id",areaId,uId);
+                "where field_id=? AND user_id=?",areaId,uId);
         if(userLinkField==null)//如果第一次接触该领域，创建该领域对应的图谱
         {
             //在关系型数据库中加入相关记录
@@ -153,7 +181,7 @@ public class UserControllerL {
         return br;
     }
 
-    @GetMapping("/getMapByAreaUser")//得到某个用户某个领域的知识图谱
+    @RequestMapping("/getMapByAreaUser")//得到某个用户某个领域的知识图谱
     public Map<String, Object> getMapByAreaUser(
             @RequestParam("areaId") Long areaId,
             @RequestParam("uId") Long uId
@@ -163,7 +191,7 @@ public class UserControllerL {
     }
 
 
-    @GetMapping("/getMapByJob")//得到某个岗位对应的知识图谱
+    @RequestMapping("/getMapByJob")//得到某个岗位对应的知识图谱
     public Map<String, Object> getMapByJob(
             @RequestParam("jId") BigInteger jId//岗位Id
     ){
@@ -172,6 +200,15 @@ public class UserControllerL {
         String[] jobPointList = requestList.split(",");//初始岗位知识点
         return neo4jServiceL.getJobMap(jobPointList);
     }
+
+    //将userpoint中某个知识点的状态upstatus设为学习完成
+    @RequestMapping("/setUserPointFinish")
+    public void setUserPointFinish(
+            @RequestParam("pNameId") Long pNameId//知识点pNameId
+    ){
+        neo4jServiceL.setPointFinish(pNameId);
+    }
+
 
 
 }

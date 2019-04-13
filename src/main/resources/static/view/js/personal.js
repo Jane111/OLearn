@@ -6,18 +6,19 @@ var nodes;
 var edges;
 // 已扩展的节点
 var nodeExtendArr = new Array();
-
-function drawGraph() {
-    init();
+let timer = null
+function drawGraphUser(userObj) {
+    let userObjs = userObj
+    initTag();
     //修改初始缩放
     network.moveTo({scale: 0.6});
     //先初始化一个节点
     $.ajax({
-        url:'/user/getMapByAreaUser?uId=1&areaId=1',
+        url:'/user/getMapByAreaUser?areaId='+userObj.areaId + '&uId='+userObj.uId,
         async:false,
         success: function(ret) {
             if(ret){
-                createNetwork({nodes:ret.nodeList,edges:ret.edgeList});
+                createNetworkTag({nodes:ret.nodeList,edges:ret.edgeList});
             }else{
                 layer.msg("查询失败");
             }
@@ -27,53 +28,71 @@ function drawGraph() {
 //            params.event = "[original event]";
 //            document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
 //            console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
-        window.location.href="http://localhost:8080/view/page/chooseCourse.html"
+
+        if(params.nodes.length>0&&params.nodes[0]<10000){
+            const pNameId = params.nodes[0];
+            clearTimeout(timer)
+            timer = setTimeout(function () {
+                window.location.href="http://localhost:8080/view/page/studyLine.html?clusterId="+pNameId
+            },300)
+        }
+
+
     });
     network.on("doubleClick", function (params) {//双击将该知识点加入学习
 //            params.event = "[original event]";
 //            document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
 //            console.log()
-        var pNameId = params.nodes[0];
-        $.ajax({
-            url:'/user/getPreviousPoint?pNameId='+pNameId,
-            async:false,
-            success: function(ret) {
-                if(ret){
-                    layer.confirm("加入学习前，请确定已经学习其前导内容："+ret, {
-                            btn:["确认","取消"],
-                            title:"提示"
-                        },
-                        function() {
-                            $.ajax({
-                                url:'/user/addPointToUserMap?uId=1&pNameId='+pNameId,
-                                async:false,
-                                success: function(ret) {
-                                    if(ret){
-                                        layer.msg("加入学习成功");
-                                    }else{
-                                        layer.msg("查询失败");
-                                    }
+        if(params.nodes.length>0&&params.nodes[0]<10000){
+            clearTimeout(timer)
+            var pNameId = params.nodes[0];
+            $.ajax({
+                url:'/user/getUserPreviousPoint?pNameId='+pNameId,
+                async:false,
+                success: function(ret) {
+                    if(ret){
+                        layer.confirm("您还未完成前导知识："+ret+"暂时无法加入学习",{
+                                btn:["我知道了"],
+                                title:"提示"
+                            }
+                        )
+                    }else{
+                        $.ajax({
+                            url:'/user/addPointToUserMap?uId=1&pNameId='+pNameId,
+                            async:false,
+                            success: function(ret) {
+                                if(ret){
+                                    layer.msg("加入学习成功");
+                                    drawGraphUser(userObjs)
+                                }else{
+                                    layer.msg("查询失败");
                                 }
-                            });
-                        }
-                    )
-
-                }else{
-                    layer.msg("查询失败");
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
+
 
     });
 };
 
-function init(){
+function initTag(){
     // 创建节点对象
     nodes = new vis.DataSet([]);
     // 创建连线对象
     edges = new vis.DataSet([]);
     // 创建一个网络拓扑图  不要使用jquery获取元素
     var container = document.getElementById('network_id');
+    // 符号表示说明
+    var x = -container.clientWidth/1.5;
+    var y = -550;
+    var step = 150;
+    nodes.add({id: 10000, x: x, y: y, label: '学习完成', group: 'finished', value: 1, fixed: true, physics:false});
+    nodes.add({id: 10001, x: x + 1*step, y: y , label: '正在学习', group: 'learning', value: 1, fixed: true,  physics:false});
+    nodes.add({id: 10002, x: x + 2*step, y: y , label: '推荐学习', group: 're', value: 1, fixed: true,  physics:false});
+    nodes.add({id: 10003, x: x + 3*step, y: y, label: '未学习', group: 'not', value: 1, fixed: true,  physics:false});
 
     var data = {nodes: nodes, edges: edges};
     //全局设置，每个节点和关系的属性会覆盖全局设置
@@ -81,10 +100,10 @@ function init(){
         //设置节点形状
         nodes:{
             shape: 'dot',//采用远点的形式
-            size: 40,
+            size: 25,
             font:{
                 face:'verdana',
-                size:20//字体大小
+                size:25//字体大小
             }
         },
         // 设置关系连线
@@ -113,6 +132,24 @@ function init(){
                 damping: 0.09,
                 avoidOverlap: 0
             }
+        },
+        groups: {
+            finished: {
+                shape: 'dot',
+                color: '#FF9900' // orange
+            },
+            learning: {
+                shape: 'dot',
+                color: "#FF4040" //
+            },
+            re: {
+                shape: 'dot',
+                color: "#A4D3EE" //
+            },
+            not: {
+                shape: 'dot',
+                color: "#C4C4C4" //
+            }
         }
 //            layout: {//按树形结构显示
 //                hierarchical: {
@@ -125,7 +162,7 @@ function init(){
 }
 
 //扩展节点 param nodes和relation集合
-function createNetwork(param) {
+function createNetworkTag(param) {
     //可以试试注释掉去重的方法看看效果
     console.log(param.nodes);
     console.log(param.edges);
@@ -141,15 +178,29 @@ function createNetwork(param) {
             for(var i=0;i<param.nodes.length;i++){
                 var node = param.nodes[i];
                 //控制背景色 不同类型的节点颜色不同
-                var background = "red";
-                //人
-                if(node.nodeName && node.nodeName!="人工智能"){
-                    background = "#A0CE4E";
+                //
+                var pointGroup = "not"
+
+                if(node.nodeStatus==0){//学习完成
+                    pointGroup = "finished";
                 }
-//                    //电影
-//                    else if(node.title && node.title!=""){
-//                        background = "#6DCE9E";
-//                    }
+                if(node.nodeStatus && node.nodeStatus==1){//正在学习
+                    pointGroup = "learning";
+                }
+                if(node.nodeStatus && node.nodeStatus==2){//推荐学习
+                    pointGroup = "re";
+                }
+                if(node.nodeStatus && node.nodeStatus==3){//未学习
+                    pointGroup = "not";
+                }
+//                 //人
+//                 if(node.nodeName && node.nodeName!="人工智能"){
+//                     background = "#A0CE4E";
+//                 }
+// //                    //电影
+// //                    else if(node.title && node.title!=""){
+// //                        background = "#6DCE9E";
+// //                    }
                 //拼接返回的结果显示在图上
                 var label = "";
                 for(var n in node){
@@ -161,19 +212,20 @@ function createNetwork(param) {
                 nodes.add({
                     id: node.pNameId,//id为
                     label: label,
+                    group:pointGroup,
                     title:"双击加入学习",
-                    color:{
-                        background:background,
-                        border:background,
-                        hover:{
-                            background:'#94c860',
-                            border:"#A0CE4E"
-                        },
-                        highlight:{
-                            background:'#94c860',
-                            border:"#A0CE4E"
-                        }
-                    }
+                    // color:{
+                    //     background:background,
+                    //     border:background,
+                    //     hover:{
+                    //         background:'#94c860',
+                    //         border:"#A0CE4E"
+                    //     },z
+                    //     highlight:{
+                    //         background:'#94c860',
+                    //         border:"#A0CE4E"
+                    //     }
+                    // }
                 });
             }
         }else{
@@ -206,11 +258,11 @@ function createNetwork(param) {
                     length: 150,
                     width:3,
                     color:{
-                        color:"#A0CE4E",
-                        highlight:"#94c860",
-                        hover:"#94c860",
+                        // color:"#A0CE4E",
+                        // highlight:"#94c860",
+                        // hover:"#94c860",
 //                            opacity:0.3,
-//                            inherit:'from'//颜色的继承
+                        inherit:'both'//颜色的继承
                     }
                 });
             }
@@ -235,12 +287,12 @@ function deleteValueFromArr(arrName,field,keyValue){
 const vue = new Vue({
     el: "#graph_vue_box",
     mounted(){
-        drawGraph()
+        drawGraphUser({areaId:1,uId:1})
     },
     methods:{
         showGraph(){
             console.log(1111)
-            drawGraph()
+            drawGraphUser({areaId:1,uId:1})
         }
     }
 })

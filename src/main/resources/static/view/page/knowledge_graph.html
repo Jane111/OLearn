@@ -22,6 +22,22 @@
     <link rel="stylesheet" href="../css/templete.css"/>
     <link href="../../css/vis-network.min.css" rel="stylesheet" type="text/css"/>
     <style>
+        .enValid{
+            font-size: 14px;
+            line-height: 16px;
+            color: #a0ce4e;
+            text-transform: uppercase;
+            background-color: white;
+            padding: 16px 37px;
+            -webkit-border-radius: 25px;
+            border-radius: 25px;
+            -webkit-transition: 0.5s all;
+            transition: 0.5s all;
+            letter-spacing: 1px;
+            display: inline-block;
+            vertical-align: top;
+            border: 1px solid #a0ce4e;
+        }
         .label_style{
             display: flex;
             flex-wrap: wrap;
@@ -62,10 +78,10 @@
                         </a>
                     </div>
                     <div class="col-sm-8 col-md-8 col-lg-8 text-sm-center text-right">
-                        <div class="contact-block-01" id="login_register_vue">
-                            <a class="login_regester_btn"  style="margin-right: 10px;cursor:pointer" @click="login">登录</a>
-                            <a class="login_regester_btn"  style="cursor:pointer" @click="register">注册</a>
-                        </div>
+<!--                        <div class="contact-block-01" id="login_register_vue">-->
+<!--                            <a class="login_regester_btn"  style="margin-right: 10px;cursor:pointer" @click="login">登录</a>-->
+<!--                            <a class="login_regester_btn"  style="cursor:pointer" @click="register">注册</a>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -149,7 +165,11 @@
                 </div>
             </div>
             <div class="container" :class="doneFirstStep ? '':'hideIt' ">
-                <div style="cursor: pointer" class="btn-01" @click="backToChoose">返回选择</div>
+                <div style="display: flex;justify-content: space-between;align-items: center;width: 100%">
+                    <div style="cursor: pointer" class="btn-01" @click="backToChoose">返回选择</div>
+                    <div v-if="getInByWork&&isValid" class="btn-01" style="cursor: pointer"  @click="setJob">设为目标岗位</div>
+                    <div v-else-if="getInByWork&&!isValid" title="已设为目标岗位" class="enValid">已设为目标岗位</div>
+                </div>
                 <div id="network_id" class="network col-lg-12"></div><!-- 拓扑图容器-->
             </div>
         </div>

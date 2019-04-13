@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface UserPointNodeRepository extends Neo4jRepository<UserPointNode,Long> {
+    //todo 将函数改为多用户模式uId
     List<UserPointNode> findUserPointNodesByPAreaIsAndUIdIs(String pArea,Long uId);//根据pArea and uId找到对应的point
 
     List<UserPointNode> findUserPointNodesByPAreaIdIsAndUIdIs(Long pAreaId,Long uId);//根据pAreaId and uId找到对应的point
@@ -32,6 +33,10 @@ public interface UserPointNodeRepository extends Neo4jRepository<UserPointNode,L
     //把一个知识点设为正在学习状态，其下一个知识点设为推荐学习状态
     @Query("match(a:userpoint)-[r:USERPREVIOUS]->(b:userpoint{pNameId:{0}})set b.upStatus=1, a.upStatus=2")
     void setUserPointLearning(Long pNameId);
+
+    //把一个单独知识点（即没有后续课程的知识点）设为正在学习状态
+    @Query("match(a:userpoint{pNameId:{0}})set a.upStatus=1")
+    void setSoloUserPointLearning(Long pNameId);
 
     //把某个知识点的状态改为0学习完成
     @Query("match(a:userpoint{pNameId:{0}})set a.upStatus=0")

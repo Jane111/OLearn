@@ -41,6 +41,14 @@ public interface PointNodeRepository extends Neo4jRepository<PointNode,Long> {
     @Query("match (a:point{pNameId:{0}})-[r*]->(b:point) return b")
     List<PointNode> getPreviousPointByPNameId(Long pNameId);
 
+    /**
+     * 根据point的pnameId得到其所有的后续课程
+     * @param pNameId -- 知识点的名称Id
+     * @return
+     */
+    @Query("match (a:point)-[r*]->(b:point{pNameId:{0}}) return a")
+    List<PointNode> getBackPointByPNameId(Long pNameId);
+
 
     /**
      * 根据point的pname得到其所有的前导课程和其本身
