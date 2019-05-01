@@ -11,11 +11,11 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseWork<M extends BaseWork<M>> extends Model<M> implements IBean {
 
-	public void setWorkId(BigInteger workId) {
+	public void setWorkId(Long workId) {
 		set("work_id", workId);
 	}
 
-	public BigInteger getWorkId() {
+	public Long getWorkId() {
 		return get("work_id");
 	}
 

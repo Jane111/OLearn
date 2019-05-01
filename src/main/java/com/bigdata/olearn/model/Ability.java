@@ -7,5 +7,5 @@ import com.bigdata.olearn.model.base.BaseAbility;
  */
 @SuppressWarnings("serial")
 public class Ability extends BaseAbility<Ability> {
-	public static final Ability dao = new Ability().dao();
+    public static final Ability dao = new Ability().dao();
 }
