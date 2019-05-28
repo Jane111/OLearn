@@ -33,7 +33,7 @@ function drawGraphUser(userObj) {
             const pNameId = params.nodes[0];
             clearTimeout(timer)
             timer = setTimeout(function () {
-                window.location.href="http://localhost:8080/view/page/studyLine.html?clusterId="+pNameId
+                window.location.href="/view/page/studyLine.html?clusterId="+pNameId
             },300)
         }
 

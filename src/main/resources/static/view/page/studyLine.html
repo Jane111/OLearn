@@ -21,6 +21,9 @@
 
     <link rel="stylesheet" href="../css/templete.css"/>
 
+    <!--vis network-->
+    <link href="../../css/vis-network.min.css" rel="stylesheet" type="text/css"/>
+
     <style>
         .abilityLabelList{
             margin: 20px 0;
@@ -55,6 +58,121 @@
         }
         .done{
             color:#a0ce4e;
+        }
+        .partNote {
+            font-size: 14px;
+            line-height: 18px;
+            color: #727e85;
+            margin: 0;
+            float: left;
+            opacity: 0.5;
+            position: relative;
+        }
+        .noteBox{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 180px;
+            padding:0;
+            position: relative;
+            box-shadow: 0 10px 24px 0 rgba(25, 35, 40, 0.1);
+        }
+        .timeStamp{
+            position: absolute;
+            left:10px;
+            top:10px;
+            font-size: 14px;
+        }
+        .card__title{
+            font-size: 20px;
+            margin: 0;
+        }
+        .level{
+            font-weight: normal;
+            padding: 10px 0;
+            font-size: 12px;
+        }
+        .addNote{
+            font-size: 18px;
+            color: #a0ce4e;
+            cursor: pointer;
+            margin-top: -15px;
+            margin-bottom: 10px;
+        }
+        .addNote>i{
+            padding: 10px;
+        }
+        .pointArea{
+            cursor: pointer;
+        }
+        .controlArea{
+            display: flex;
+        }
+        .controlArea div{
+            margin-right: 30px;
+        }
+        .answerPart{
+            border-style: none none solid;
+            width:100px;
+            background-color:transparent;
+            border-width: 1px;
+            border-color: #a0ce4e;
+        }
+        .getAnswer{
+            padding: 40px 80px;
+            border: 1px solid #eeeeee;
+            cursor: pointer;
+            margin: 30px 0;
+        }
+        .flexBox{
+            display: flex;
+        }
+        .catalog{
+            flex-grow: 1;
+        }
+        .result_contant{
+            padding: 20px;
+            width: 100%;
+        }
+        .firstPart{
+            display: flex;
+            justify-content: space-between;
+        }
+        .card_self{
+            box-sizing: border-box;
+            width: 65%;
+        }
+        .analysis_part{
+            box-sizing: border-box;
+            width: 30%;
+        }
+        .part_title{
+            font-size: 20px;
+        }
+        .content_box{
+            text-align: center;
+            padding: 20px 30px;
+            border: 1px solid lightgray;
+        }
+        .critical{
+            font-size: 18px;
+        }
+        .network {
+            box-sizing: border-box;
+            width: 100%;
+            height: 300px;
+            border: 1px solid lightgray;
+            background-color: #fff;
+            margin-top: 10px;
+        }
+        .knowledgeGraph{
+            margin-top: 20px;
+        }
+        .cardContent{
+            border: none;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -128,13 +246,14 @@
         <div class="content-box-01 events">
             <div class="container">
                 <div class="row">
-                    <div class="tabs single-course-tabs">
+                    <div id="vueBlock" class="tabs single-course-tabs">
                         <ul class="tabs__caption">
-                            <li class="">初级课程</li>
-                            <li class="active">中级课程</li>
-                            <li class="">高级课程</li>
+                            <li :class="showPrimary ? 'active':''" @click="showMePrimary">初级课程</li>
+                            <li :class="showModerate ? 'active':''" @click="showMeModerate">中级课程</li>
+                            <li :class="showSenior ? 'active':''" @click="showMeSenior">高级课程</li>
+                            <li :class="showNote ? 'active':''" @click="showMeNote">复习卡片</li>
                         </ul>
-                        <div class="tabs__content ">
+                        <div class="tabs__content" :class="showPrimary ? 'active':''">
                             <ul id="primaryLine" class="curriculum-list">
                                 <li>
                                     <ul>
@@ -145,8 +264,8 @@
                                                     <div>{{item.columns.lesson}}</div>
                                                 </div>
                                                 <div v-if="item.columns.status==0">
-                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" @click="lighten">
-                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" data-rank="0" @click="lighten">
+                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" data-rank="0" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
                                                     </span>
                                                 </div>
                                                 <div v-else>
@@ -158,7 +277,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="tabs__content active">
+                        <div class="tabs__content" :class="showModerate ? 'active':''">
                             <ul id="moderateLine" class="curriculum-list">
                                 <li>
                                     <ul>
@@ -169,8 +288,8 @@
                                                     <div>{{item.columns.lesson}}</div>
                                                 </div>
                                                 <div v-if="item.columns.status==0">
-                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" @click="lighten">
-                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" data-rank="1" @click="lighten">
+                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" data-rank="1" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
                                                     </span>
                                                 </div>
                                                 <div v-else>
@@ -182,7 +301,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="tabs__content">
+                        <div class="tabs__content" :class="showSenior ? 'active':''">
                             <ul id="seniorLine" class="curriculum-list">
                                 <li>
                                     <ul>
@@ -193,8 +312,8 @@
                                                     <div>{{item.columns.lesson}}</div>
                                                 </div>
                                                 <div v-if="item.columns.status==0">
-                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" @click="lighten">
-                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                                    <span style="cursor: pointer" :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" data-rank="2" @click="lighten">
+                                                        <i :data-moocid="item.columns.mooc_id" :data-sequence="item.columns.sequence" data-rank="2" class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
                                                     </span>
                                                 </div>
                                                 <div v-else>
@@ -206,6 +325,231 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="tabs__content" :class="showNote ? 'active':''">
+                            <ul id="studyNote" class="curriculum-list">
+                                <li>
+                                    <ul>
+                                        <div class="controlArea">
+                                            <div class="addNote" @click="addNote">
+                                                <i class="fa fa-plus-square-o fa-lg" aria-hidden="true"></i>新建
+                                            </div>
+                                            <div class="addNote" @click="showExercise">
+                                                <i class="fa fa-sticky-note-o fa-lg" aria-hidden="true"></i>复习
+                                            </div>
+                                        </div>
+
+                                        <div id="exerciseModal" class="layui-form layui-form-pane login_register_vue login_regester_style" style="display: none">
+                                            <div class="note_row" style="align-items: flex-end">
+                                                <i class="fa fa-bell-o " style="font-size: 20px;padding: 8px 8px 0 8px;box-sizing: border-box;align-self: flex-start"></i>
+                                                <span style="padding: 8px 4px 0 4px;box-sizing: border-box;">{{exercise[exerciseIndex].topic}}
+                                                </span>
+
+                                            </div>
+                                            <div v-if="!isAnswerShow" class="product-list__content getAnswer" @click="showAnswer">
+                                                点击区域显示卡片反面
+                                            </div>
+                                            <div v-if="isAnswerShow" class="product-list__content getAnswer">
+                                                {{exercise[exerciseIndex].answer}}
+                                            </div>
+                                            <div class="btnArea">
+                                                <button class="layui-btn" :class="exerciseIndex==0 ? 'layui-btn-disabled':''" @click="lastTopic">上一题</button>
+                                                <button class="layui-btn" :class="exerciseIndex==exercise.length-1 ? 'layui-btn-disabled':''" @click="nextTopic">下一题</button>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" :style="isShow ? showThisNote:''" >
+                                            <div class="product-list__item">
+                                                <div class="product-list__content noteBox">
+                                                    <div class="product-list__category timeStamp">2019-4-25</div>
+                                                    <div class="product-list__title card__title">
+                                                        <a class="pointArea" @click="getDetail">Java第一讲</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+<!--                                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">-->
+<!--                                            <div class="product-list__item">-->
+<!--                                                <div class="product-list__content noteBox">-->
+<!--                                                    <div class="product-list__category">2019-4-25</div>-->
+<!--                                                    <div class="product-list__title "  style="font-size: 16px;">-->
+<!--                                                        <a class="pointArea" @click="getDetail">数据库学习</a>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="partNote">SQL语句中用于排序输出的是ORDER BY</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">-->
+<!--                                            <div class="product-list__item">-->
+<!--                                                <div class="product-list__content noteBox">-->
+<!--                                                    <div class="product-list__category">2019-4-25</div>-->
+<!--                                                    <div class="product-list__title "  style="font-size: 16px;">-->
+<!--                                                        <a class="pointArea" @click="getDetail">Python小记</a>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="partNote">for循环的写法是 for item in aList</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">-->
+<!--                                            <div class="product-list__item">-->
+<!--                                                <div class="product-list__content noteBox">-->
+<!--                                                    <div class="product-list__category">2019-4-25</div>-->
+<!--                                                    <div class="product-list__title "  style="font-size: 16px;">-->
+<!--                                                        <a class="pointArea" @click="getDetail">C语言学习</a>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="partNote">C语言程序运行时第一个调用的函数是main函数</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" :style="isShow2 ? showThisNote:''">
+                                            <div class="product-list__item">
+                                                <div class="product-list__content noteBox">
+                                                    <div class="product-list__category timeStamp">2019-4-25</div>
+                                                    <div class="product-list__title card__title">
+                                                        <a class="pointArea" @click="getDetail">JAVA第二讲</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+<!--                        <div id="noteModal" class="layui-form layui-form-pane login_register_vue login_regester_style" style="display: none">-->
+<!--                            <div class="note_row">-->
+<!--                                <i class="fa fa-tag " style="font-size: 20px;padding: 8px 8px 0 8px;box-sizing: border-box;"></i>-->
+<!--                                <span style="padding: 8px 4px 0 4px;box-sizing: border-box;">卡片正面</span>-->
+<!--                            </div>-->
+<!--                            <input type="text"  required  placeholder="" class="layui-input login_regester_input" style="border-style: none none solid;">-->
+<!--                            <div class="note_row">-->
+<!--                                <i class="fa fa-file-text-o" style="font-size: 20px;padding:8px;box-sizing: border-box;"></i>-->
+<!--                                <div style="padding: 8px 4px;box-sizing: border-box;">卡片反面</div>-->
+<!--                            </div>-->
+<!--                            <textarea name="" required  placeholder="" class="layui-textarea login_regester_input" style="height: 180px;"></textarea>-->
+<!--                            <button class="layui-btn modal_btn" @click="saveNote">保存</button>-->
+<!--                        </div>-->
+
+<!--                        <div id="editNoteModal" class="layui-form layui-form-pane login_register_vue login_regester_style" style="display: none">-->
+<!--                            <div class="note_row">-->
+<!--                                <i class="fa fa-tag " style="font-size: 20px;padding: 8px 8px 0 8px;box-sizing: border-box;"></i>-->
+<!--                                <span style="padding: 8px 4px 0 4px;box-sizing: border-box;">卡片正面</span>-->
+<!--                            </div>-->
+<!--                            <input v-if="!noEdit" type="text"  required  placeholder="" class="layui-input login_regester_input" style="border-style: none none solid;">-->
+<!--                            <input v-if="noEdit" type="text"  disabled  placeholder="" class="layui-input login_regester_input" style="border-style: none none solid;">-->
+<!--                            <div class="note_row">-->
+<!--                                <i class="fa fa-file-text-o" style="font-size: 20px;padding:8px;box-sizing: border-box;"></i>-->
+<!--                                <div style="padding: 8px 4px;box-sizing: border-box;">卡片反面</div>-->
+<!--                            </div>-->
+<!--                            <textarea v-if="!noEdit" name="" required  placeholder="" class="layui-textarea login_regester_input" style="height: 180px;"></textarea>-->
+<!--                            <textarea v-if="noEdit" name="" disabled  placeholder="" class="layui-textarea login_regester_input" style="height: 180px;"></textarea>-->
+<!--                            <div class="btnArea" v-if="noEdit">-->
+<!--                                <button class="layui-btn" @click="goEdit">编辑</button>-->
+<!--                                <button class="layui-btn">删除</button>-->
+<!--                            </div>-->
+<!--                            <div class="btnArea" v-else>-->
+<!--                                <button class="layui-btn">保存</button>-->
+<!--                                <button class="layui-btn" @click="cancel">取消</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div id="card_analysis" class="layui-form layui-form-pane login_register_vue login_regester_style" style="display: none">
+                            <div class="result_contant">
+                                <div class="firstPart">
+                                    <div class="card_self">
+                                        <span class="part_title">卡片信息</span>
+                                        <div class="note_row">
+                                            <i class="fa fa-tag " style="font-size: 20px;padding: 8px 8px 0 8px;box-sizing: border-box;"></i>
+                                            <span style="padding: 8px 4px 0 4px;box-sizing: border-box;">卡片正面</span>
+                                        </div>
+                                        <div class="content_box">
+                                            <textarea class="cardContent">面向对象三大特性</textarea>
+                                        </div>
+                                        <div class="note_row">
+                                            <i class="fa fa-file-text-o" style="font-size: 20px;padding:8px;box-sizing: border-box;"></i>
+                                            <div style="padding: 8px 4px;box-sizing: border-box;">卡片反面</div>
+                                        </div>
+                                        <div class="content_box">
+                                            <textarea class="cardContent">继承、封装、多态</textarea>
+                                        </div>
+                                        <div class="knowledgeGraph">
+                                            <span class="part_title">知识图谱</span>
+                                            <div id="network_id" class="network"></div><!-- 拓扑图容器-->
+                                        </div>
+                                    </div>
+                                    <div v-if="sign" class="analysis_part">
+                                        <span class="part_title">补充知识</span>
+                                        <div>
+                                            <span class="critical">封装:</span>是面向对象方法的重要原则，就是把对象的属性和行为（数据）结合为一个独立的整体，并尽可能隐藏对象的内部实现细节，就是把不想告诉或者不该告诉别人的东西隐藏起来，把可以告诉别人的公开，别人只能用我提供的功能实现需求，而不知道是如何实现的。增加安全性
+                                        </div>
+                                        <div>
+                                            <span class="critical">继承:</span>是面向对象最显著的一个特性，继承是从已有的类中派生出新的类称为子类，子类继承父类的数据属性和行为，并能根据自己的需求扩展出新的行为，提高了代码的复用性。
+                                        </div>
+                                        <div>
+                                            <span class="critical">多态:</span>指允许不同的对象对同一消息做出相应。即同一消息可以根据发送对象的不同而采用多种不同的行为方式（发送消息就是函数调用）。封装和继承几乎都是为多态而准备的，在执行期间判断引用对象的实际类型，根据其实际的类型调用其相应的方法。
+                                        </div>
+                                    </div>
+                                    <div v-else class="analysis_part">
+                                        <span class="part_title">补充知识</span>
+                                        <button class="layui-btn" @click="setSign">显示补充知识及图谱</button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <button class="layui-btn modal_btn" @click="saveNote">保存卡片</button>
+                        </div>
+
+                        <div id="cardEdit_analysis" class="layui-form layui-form-pane login_register_vue login_regester_style" style="display: none">
+                            <div class="result_contant">
+                                <div class="firstPart">
+                                    <div class="card_self">
+                                        <span class="part_title">卡片信息</span>
+                                        <div class="note_row">
+                                            <i class="fa fa-tag " style="font-size: 20px;padding: 8px 8px 0 8px;box-sizing: border-box;"></i>
+                                            <span style="padding: 8px 4px 0 4px;box-sizing: border-box;">卡片正面</span>
+                                        </div>
+                                        <div class="content_box">
+                                            <textarea class="cardContent">面向对象三大特性</textarea>
+                                        </div>
+                                        <div class="note_row">
+                                            <i class="fa fa-file-text-o" style="font-size: 20px;padding:8px;box-sizing: border-box;"></i>
+                                            <div style="padding: 8px 4px;box-sizing: border-box;">卡片反面</div>
+                                        </div>
+                                        <div class="content_box">
+                                            <textarea class="cardContent">继承、封装、多态</textarea>
+                                        </div>
+                                        <div class="knowledgeGraph">
+                                            <span class="part_title">知识图谱</span>
+                                            <div id="network_id_edit" class="network"></div><!-- 拓扑图容器-->
+                                        </div>
+                                    </div>
+                                    <div class="analysis_part">
+                                        <span class="part_title">补充知识</span>
+                                        <div>
+                                            <span class="critical">封装:</span>是面向对象方法的重要原则，就是把对象的属性和行为（数据）结合为一个独立的整体，并尽可能隐藏对象的内部实现细节，就是把不想告诉或者不该告诉别人的东西隐藏起来，把可以告诉别人的公开，别人只能用我提供的功能实现需求，而不知道是如何实现的。增加安全性
+                                        </div>
+                                        <div>
+                                            <span class="critical">继承:</span>是面向对象最显著的一个特性，继承是从已有的类中派生出新的类称为子类，子类继承父类的数据属性和行为，并能根据自己的需求扩展出新的行为，提高了代码的复用性。
+                                        </div>
+                                        <div>
+                                            <span class="critical">多态:</span>指允许不同的对象对同一消息做出相应。即同一消息可以根据发送对象的不同而采用多种不同的行为方式（发送消息就是函数调用）。封装和继承几乎都是为多态而准备的，在执行期间判断引用对象的实际类型，根据其实际的类型调用其相应的方法。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btnArea" v-if="noEdit">
+                                <button class="layui-btn" @click="goEdit">编辑</button>
+                                <button class="layui-btn">删除</button>
+                            </div>
+                            <div class="btnArea" v-else>
+                                <button class="layui-btn">保存</button>
+                                <button class="layui-btn" @click="cancel">取消</button>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -306,6 +650,10 @@
 <!--Vue-->
 <script src="../plugin/vue/vue.js"></script>
 <script src="../plugin/vue/vue-resource.js"></script>
+
+<script type="text/javascript" src="../../js/vis.js"></script>
+<script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
 
 <script src="../js/requestIp.js"></script>
 <script src="../js/main.js"></script>

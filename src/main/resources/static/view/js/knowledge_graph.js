@@ -32,7 +32,7 @@ function drawGraph(areaId) {
             const pNameId = params.nodes[0];
             clearTimeout(timer)
             timer = setTimeout(function () {
-                window.location.href="http://localhost:8080/view/page/chooseCourse.html?clusterId="+pNameId
+                window.location.href="/view/page/chooseCourse.html?clusterId="+pNameId
             },300)
         }
 
@@ -118,7 +118,7 @@ function drawGraphUser(userObj) {
             const pNameId = params.nodes[0];
             clearTimeout(timer)
             timer = setTimeout(function () {
-                window.location.href="http://localhost:8080/view/page/chooseCourse.html?clusterId="+pNameId
+                window.location.href="/view/page/chooseCourse.html?clusterId="+pNameId
             },300)
         }
 
@@ -192,7 +192,7 @@ function drawGraphByWork(workId) {
             console.log(params)
             clearTimeout(timer)
             timer = setTimeout(function () {
-                window.location.href="http://localhost:8080/view/page/chooseCourse.html?clusterId="+pNameId
+                window.location.href="/view/page/chooseCourse.html?clusterId="+pNameId
             },300)
         }
 
