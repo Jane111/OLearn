@@ -11,11 +11,11 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseUserLinkField<M extends BaseUserLinkField<M>> extends Model<M> implements IBean {
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         set("id", id);
     }
 
-    public Long getId() {
+    public BigInteger getId() {
         return get("id");
     }
 
@@ -33,11 +33,11 @@ public abstract class BaseUserLinkField<M extends BaseUserLinkField<M>> extends 
         return get("nickname");
     }
 
-    public void setFieldId(Long fieldId) {
+    public void setFieldId(BigInteger fieldId) {
         set("field_id", fieldId);
     }
 
-    public Long getFieldId() {
+    public BigInteger getFieldId() {
         return get("field_id");
     }
 

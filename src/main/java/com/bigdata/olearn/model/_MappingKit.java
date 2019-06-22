@@ -26,6 +26,8 @@ public class _MappingKit {
 		arp.addMapping("user", "user_id", User.class);
 		arp.addMapping("work", "work_id", Work.class);
 		arp.addMapping("work_cluster", "id", WorkCluster.class);
+		arp.addMapping("field", "field_id", Field.class);
+		arp.addMapping("user_link_field", "id", UserLinkField.class);
 	}
 }
 

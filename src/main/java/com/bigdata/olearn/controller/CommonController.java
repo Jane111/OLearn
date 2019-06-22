@@ -105,16 +105,11 @@ public class CommonController {
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
-    //todo:岗位推荐
 
     //todo：课程推荐
 
-
-    //todo:返回知识点标签，课程搜索返回大的领域标签
-
     //todo：搜索课程（人数，课程名）
     //todo：爬一部分其它领域的课程
-    //todo：返回能力标签
     //推荐岗位，返回岗位信息列表
     //课程详情，图，简介，内容，
 }

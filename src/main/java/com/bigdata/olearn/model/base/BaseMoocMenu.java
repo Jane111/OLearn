@@ -11,19 +11,19 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseMoocMenu<M extends BaseMoocMenu<M>> extends Model<M> implements IBean {
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		set("id", id);
 	}
 
-	public Long getId() {
+	public BigInteger getId() {
 		return get("id");
 	}
 
-	public void setMoocId(Long moocId) {
+	public void setMoocId(BigInteger moocId) {
 		set("mooc_id", moocId);
 	}
 
-	public Long getMoocId() {
+	public BigInteger getMoocId() {
 		return get("mooc_id");
 	}
 

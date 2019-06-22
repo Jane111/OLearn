@@ -1,13 +1,16 @@
 package com.bigdata.olearn.controller;
 
+import com.bigdata.olearn.model.WorkCluster;
 import com.bigdata.olearn.service.WorkServiceW;
 import com.bigdata.olearn.util.BaseResponse;
 import com.bigdata.olearn.util.ResultCodeEnum;
 import com.jfinal.plugin.activerecord.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -25,6 +28,17 @@ public class WorkControllerW {
         List<Record> data=workServiceW.getLabel();
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
+        return br;
+    }
+
+    //todo:岗位推荐
+    @RequestMapping(value="workRecommend")
+    public BaseResponse workRecommend(
+            @RequestParam(value = "userId")BigInteger userId
+    ){
+        List<WorkCluster>data =workServiceW.workRecommend(userId);
+        br.setData(data);
+        br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
     //todo：显示岗位列表
