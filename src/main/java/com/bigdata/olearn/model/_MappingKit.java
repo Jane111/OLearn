@@ -17,6 +17,7 @@ public class _MappingKit {
 
 	public static void mapping(ActiveRecordPlugin arp) {
 		arp.addMapping("ability", "id", Ability.class);
+		arp.addMapping("field", "field_id", Field.class);
 		arp.addMapping("mooc", "mooc_id", Mooc.class);
 		arp.addMapping("mooc_cluster", "id", MoocCluster.class);
 		arp.addMapping("mooc_link_cluster", "id", MoocLinkCluster.class);

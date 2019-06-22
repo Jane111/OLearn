@@ -49,7 +49,7 @@ public class MoocController {
         return br;
     }
     //todo:显示某个领域下的知识图谱——图实现
-    @RequestMapping(value="/showCourse")
+    @RequestMapping(value="/showKnowledgeGraph")
     public BaseResponse showKnowledgeGraph(
             @RequestParam(value = "fieldId")Long fieldId
     ){

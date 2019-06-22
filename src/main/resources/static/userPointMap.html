@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>领域知识图谱</title>
+    <title>用户个人中心的知识图谱</title>
     <script type="text/javascript" src="js/vis.js"></script>
     <link href="css/vis-network.min.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
@@ -34,7 +34,7 @@
         network.moveTo({scale: 0.6});
         //先初始化一个节点
         $.ajax({
-            url:'/user/getMapByArea?areaId=1',
+            url:'/user/getMapByAreaUser?areaId=1&uId=1',
             async:false,
             success: function(ret) {
                 if(ret){
@@ -43,47 +43,6 @@
                     layer.msg("查询失败");
                 }
             }
-        });
-        network.on("click", function (params) {//单击进入该知识点的具体内容
-//            params.event = "[original event]";
-//            document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
-//            console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
-        });
-        network.on("doubleClick", function (params) {//双击将该知识点加入学习
-//            params.event = "[original event]";
-//            document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
-//            console.log()
-            var pNameId = params.nodes[0];
-            $.ajax({
-                url:'/user/getPreviousPoint?pNameId='+pNameId,
-                async:false,
-                success: function(ret) {
-                    if(ret){
-                        layer.confirm("加入学习前，请确定已经学习其前导内容："+ret, {
-                            btn:["确认","取消"],
-                            title:"提示"
-                            },
-                        function() {
-                            $.ajax({
-                                url:'/user/addPointToUserMap?uId=1&pNameId='+pNameId,
-                                async:false,
-                                success: function(ret) {
-                                    if(ret){
-                                        layer.msg("加入学习成功");
-                                    }else{
-                                        layer.msg("查询失败");
-                                    }
-                                }
-                            });
-                        }
-                        )
-
-                    }else{
-                        layer.msg("查询失败");
-                    }
-                }
-            });
-
         });
     });
 
@@ -162,10 +121,24 @@
                     var node = param.nodes[i];
                     //控制背景色 不同类型的节点颜色不同
                     var background = "red";
-                    //人
-                    if(node.nodeName && node.nodeName!="人工智能"){
-                        background = "#A0CE4E";
+                    //用户知识点的状态，0学习完成/1正在学习/2推荐学习/3未学习
+                    if(node.nodeStatus==0)
+                    {
+                        background = "yellow"
                     }
+                    if(node.nodeStatus==1)
+                    {
+                        background = "pink"
+                    }
+                    if(node.nodeStatus==2)
+                    {
+                        background = "blue"
+                    }
+                    if(node.nodeStatus==3)
+                    {
+                        background = "gray"
+                    }
+
 //                    //电影
 //                    else if(node.title && node.title!=""){
 //                        background = "#6DCE9E";

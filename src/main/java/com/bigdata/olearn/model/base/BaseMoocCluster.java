@@ -11,11 +11,11 @@ import java.math.BigInteger;
 @SuppressWarnings("serial")
 public abstract class BaseMoocCluster<M extends BaseMoocCluster<M>> extends Model<M> implements IBean {
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		set("id", id);
 	}
 
-	public Long getId() {
+	public BigInteger getId() {
 		return get("id");
 	}
 
@@ -33,6 +33,14 @@ public abstract class BaseMoocCluster<M extends BaseMoocCluster<M>> extends Mode
 
 	public String getPrelabel() {
 		return get("prelabel");
+	}
+
+	public void setFieldId(BigInteger fieldId) {
+		set("field_id", fieldId);
+	}
+
+	public BigInteger getFieldId() {
+		return get("field_id");
 	}
 
 	public void setCreatetime(java.util.Date createtime) {

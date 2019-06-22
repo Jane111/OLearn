@@ -9,6 +9,6 @@ spring:
 
 jfinal:
   debug: true
-  jdbcUrl: jdbc:mysql://localhost:3306/bigdata?characterEncoding=utf8&serverTimezone=UTC
+  jdbcUrl: jdbc:mysql://47.107.150.100:3306/bigdata?characterEncoding=utf8&serverTimezone=UTC
   dbUser: root
   dbPwd: wxm19980928

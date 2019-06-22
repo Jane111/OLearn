@@ -21,6 +21,14 @@ public interface PreviousRelationshipRepository extends Neo4jRepository<Previous
     @Query("match p = (a:point{pArea:{0}})-[r:PREVIOUS]->(b) return p")
     List<PreviousRelationship> getRelationshipByPArea(String pArea);
 
+    /**
+     * 根据领域，查询知识图谱的关系和又关系的节点
+     * @param pAreaId -- 领域Id
+     * @return
+     */
+    @Query("match p = (a:point{pAreaId:{0}})-[r:PREVIOUS]->(b) return p")
+    List<PreviousRelationship> getRelationshipByPAreaId(Long pAreaId);
+
 
     /**
      * 为两个已经存在的知识点添加关系
