@@ -73,4 +73,19 @@ public class UserPointNode implements Serializable {
     public void setpAreaId(Long pAreaId) {
         this.pAreaId = pAreaId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserPointNode upn = (UserPointNode) o;
+
+        return id.equals(upn.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

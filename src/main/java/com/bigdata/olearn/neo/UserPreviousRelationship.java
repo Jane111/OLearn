@@ -39,4 +39,19 @@ public class UserPreviousRelationship implements Serializable {
     public void setEndNode(UserPointNode endNode) {
         this.endNode = endNode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserPreviousRelationship upr = (UserPreviousRelationship) o;
+
+        return id.equals(upr.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
