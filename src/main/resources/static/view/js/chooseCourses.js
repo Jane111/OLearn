@@ -14,18 +14,39 @@ const vue = new Vue({
     methods:{
         addSeniorCourse(e){
             this.senior_course = e.target.dataset.courseindex * 1
+            let index = e.target.dataset.courseindex * 1
+            let moocId = this.courseList[index].columns.mooc_id
+            this.$http.post(requestIp+'user/addCourseToPath',{userId:1, moocId:[moocId], clusterId:this.options.clusterId,theMinRank:2},{emulateJSON: true}).then((res)=>{
+
+            },(res)=>{
+
+            })
         },
         delSeniorCourse(){
             this.senior_course = -1
         },
         addModerateCourse(e){
             this.moderate_course = e.target.dataset.courseindex * 1
+            let index = e.target.dataset.courseindex * 1
+            let moocId = this.courseList[index].columns.mooc_id
+            this.$http.post(requestIp+'user/addCourseToPath',{userId:1, moocId:[moocId], clusterId:this.options.clusterId, theMinRank:1},{emulateJSON: true}).then((res)=>{
+
+            },(res)=>{
+
+            })
         },
         delModerateCourse(){
             this.moderate_course = -1
         },
         addPrimaryCourse(e){
             this.primary_course = e.target.dataset.courseindex * 1
+            let index = e.target.dataset.courseindex * 1
+            let moocId = this.courseList[index].columns.mooc_id
+            this.$http.post(requestIp+'user/addCourseToPath',{userId:1, moocId:[moocId], clusterId:this.options.clusterId, theMinRank:0},{emulateJSON: true}).then((res)=>{
+
+            },(res)=>{
+
+            })
         },
         delPrimaryCourse(){
             this.primary_course = -1

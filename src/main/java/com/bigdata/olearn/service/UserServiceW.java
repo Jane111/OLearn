@@ -24,9 +24,11 @@ public class UserServiceW {
                schedule.setMoocName(moocLinkCluster.getTitle());
                schedule.setRank(moocLinkCluster.getRank());
                schedule.setClusterId(moocLinkCluster.getClusterId());
+               schedule.setClassname(moocLinkCluster.getClassname());
                schedule.setMenuId(moocMenu.getMoocId());
                schedule.setSequence(moocMenu.getSequence());
                schedule.setLesson(moocMenu.getLesson());
+               schedule.setStatus(0);
                schedule.save();
            }
        }
@@ -98,7 +100,7 @@ public class UserServiceW {
         if(ability.getRank()<theMinRank){
             return;
         }
-       Db.update("UPDATE ability SET rank=? WHERE cluster_id=? AND user_id=?",theMinRank,clusterId,userId);
+       Db.update("UPDATE ability SET rank=? WHERE cluster_id=? AND user_id=?",theMinRank+1,clusterId,userId);
 
     }
 
@@ -107,8 +109,8 @@ public class UserServiceW {
         return Db.find("SELECT DISTINCT mooc_id ,mooc_name,rank FROM schedule WHERE user_id=? AND cluster_id=?",userId,clusterId);
     }
     //查看某个用户的某一课程的进度，即目录的点亮情况
-    public List<Record> showMySchedule(BigInteger userId,BigInteger moocId){
-        return Db.find("SELECT * FROM schedule WHERE user_id=? AND mooc_id=? ORDER BY sequence",userId,moocId);
+    public List<Record> showMySchedule(BigInteger userId,BigInteger clusterId,Integer rank){
+        return Db.find("SELECT * FROM schedule WHERE rank=? AND user_id=? AND cluster_id=? ORDER BY sequence",rank,userId,clusterId);
     }
     //点亮课程进度
     public void setMyMoocPlan(BigInteger userId,BigInteger moocId,Integer sequence){
@@ -124,7 +126,7 @@ public class UserServiceW {
             if(schedule!=null){
                 if(schedule.getStatus()==1){
                     //该用户已经达到此层级，可以修改用户此能力级别
-                    Db.update("UPDATE ability SET rank=? WHERE user_id=? AND cluster_id=?",userId,moocLinkCluster.getClusterId());
+                    Db.update("UPDATE ability SET rank=? WHERE user_id=? AND cluster_id=?",schedule.getRank()+1,userId,moocLinkCluster.getClusterId());
                     break;
                 }
             }

@@ -18,14 +18,13 @@ import java.util.List;
 public class UserControllerW {
     @Autowired
     UserServiceW userServiceW;
-    @Autowired
-    BaseResponse br;
     //将知识点加入学习路线
     @RequestMapping(value="/addKnowledgeToPath")
     public BaseResponse addKnowledgeToPath(
             @RequestParam(value = "userId")BigInteger userId,
             @RequestParam(value = "clusterId")BigInteger clusterId
     ){
+        BaseResponse br=new BaseResponse();
         userServiceW.addKnowledgeLabel(userId,clusterId);
         br.setResult(ResultCodeEnum.SUCCESS);
         return  br;
@@ -34,11 +33,12 @@ public class UserControllerW {
     @RequestMapping(value="/addCourseToPath")
     public BaseResponse addCourseToPath(
             @RequestParam(value = "userId")BigInteger userId,
-            @RequestParam(value = "moocId")BigInteger[] moocId,
+            @RequestParam(value = "moocId[]")BigInteger[] moocId,
             @RequestParam(value = "clusterId")BigInteger clusterId,
             @RequestParam(value = "theMinRank")Integer theMinRank
     ){
         userServiceW.addCourseToPath(userId,moocId,clusterId,theMinRank);
+        BaseResponse br=new BaseResponse();
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
@@ -50,6 +50,7 @@ public class UserControllerW {
             @RequestParam(value = "clusterId") BigInteger clusterId
     ){
         List<Record> data= userServiceW.showKnowledgeLearnSituaton(userId,clusterId);
+        BaseResponse br=new BaseResponse();
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
         return br;
@@ -58,9 +59,11 @@ public class UserControllerW {
     @RequestMapping(value="/showMySchedule")
     public BaseResponse showMySchedule(
             @RequestParam(value = "userId") BigInteger userId,
-            @RequestParam(value = "moocId") BigInteger moocId
+            @RequestParam(value = "clusterId") BigInteger clusterId,
+            @RequestParam(value = "rank") Integer rank
     ){
-        List<Record> data= userServiceW.showMySchedule(userId,moocId);
+        List<Record> data= userServiceW.showMySchedule(userId,clusterId,rank);
+        BaseResponse br=new BaseResponse();
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
         return br;
@@ -73,6 +76,7 @@ public class UserControllerW {
             @RequestParam(value = "sequence") Integer sequence
     ){
         userServiceW.setMyMoocPlan(userId,moocId,sequence);
+        BaseResponse br=new BaseResponse();
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
@@ -84,6 +88,7 @@ public class UserControllerW {
             @RequestParam(value = "userId") BigInteger userId
     ){
         List<Record> data = userServiceW.showMyLabel(userId);
+        BaseResponse br=new BaseResponse();
         br.setData(data);
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
@@ -96,6 +101,7 @@ public class UserControllerW {
             @RequestParam(value = "password") String password
     ){
         ResultCodeEnum result = userServiceW.register(nickname,mail,password);
+        BaseResponse br=new BaseResponse();
         br.setResult(result);
         return br;
     }
@@ -106,6 +112,7 @@ public class UserControllerW {
             @RequestParam(value = "password") String password
     ){
         User user = userServiceW.login(mail,password);
+        BaseResponse br=new BaseResponse();
         if(user==null){
             br.setResult(ResultCodeEnum.ERROR_ACCOUNT_OR_PASSWORD);
         }else {

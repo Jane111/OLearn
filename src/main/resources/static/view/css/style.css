@@ -7446,8 +7446,8 @@ ol li::before {
 .events-list {
 	border-top: 1px solid #e9ecef;
 	width: 100%;
-	padding-top: 40px;
-	padding-bottom: 40px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 .events-list::after {
@@ -7479,7 +7479,6 @@ ol li::before {
 
 .events-list__info {
 	float: left;
-	width: 20%;
 	padding: 30px 60px 0;
 	text-align: center;
 }

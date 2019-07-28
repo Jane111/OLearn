@@ -1,5 +1,6 @@
 package com.bigdata.olearn.controller;
 
+import com.bigdata.olearn.model.Work;
 import com.bigdata.olearn.model.WorkCluster;
 import com.bigdata.olearn.service.WorkServiceW;
 import com.bigdata.olearn.util.BaseResponse;
@@ -18,13 +19,12 @@ import java.util.List;
 public class WorkControllerW {
     @Autowired
     WorkServiceW workServiceW;
-    @Autowired
-    BaseResponse br;
 
     //todo：返回岗位目标标签
     //显示领域标签
     @RequestMapping(value="/showLabel")
     public BaseResponse showLabel(){
+        BaseResponse br=new BaseResponse();
         List<Record> data=workServiceW.getLabel();
         br.setResult(ResultCodeEnum.SUCCESS);
         br.setData(data);
@@ -36,8 +36,10 @@ public class WorkControllerW {
     public BaseResponse workRecommend(
             @RequestParam(value = "userId")BigInteger userId
     ){
+        BaseResponse br=new BaseResponse();
         List<WorkCluster>data =workServiceW.workRecommend(userId);
-        br.setData(data);
+        List<Work>works=workServiceW.getWorkRecommend(data);
+        br.setData(works);
         br.setResult(ResultCodeEnum.SUCCESS);
         return br;
     }
