@@ -12,6 +12,8 @@ import com.bigdata.olearn.repository.UserPointNodeRepository;
 import com.bigdata.olearn.service.Neo4jServiceL;
 import com.bigdata.olearn.service.UserServiceL;
 import com.bigdata.olearn.util.BaseResponse;
+import com.bigdata.olearn.util.Constant;
+import com.bigdata.olearn.util.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,30 @@ public class UserControllerL {
     ){
         return neo4jServiceL.getMapByArea(areaId);
     }
+    //用户是否拥有该领域的知识图谱
+    @GetMapping("/userHasAreaMap")
+    public BaseResponse userHasAreaMap(
+            @RequestParam("areaId") BigInteger areaId,
+            @RequestParam("uId") BigInteger uId
+    )
+    {
+        UserLinkField userLinkField = UserLinkField.dao.findFirst("select * from user_link_field " +
+                "where field_id=? AND user_id=?",areaId,uId);
+        if(userLinkField==null)
+        {
+            br.setData("false");
+        }else
+        {
+            br.setData("true");
+        }
+        return br;
+    }
+    //todo 用户是否添加为目标岗位
+    public BaseResponse userHasSetJob()
+    {
+        return br;
+    }
+
     //在添加知识点之前首先提示用户，是否学完其前导课程
     //如果没有用户知识图谱时加入知识点，询问所有的前导节点；建议在用户进入领域知识图谱页面时得到一个状态status
     @GetMapping("/getPreviousPoint")
@@ -72,14 +98,15 @@ public class UserControllerL {
             @RequestParam("areaId") BigInteger areaId//领域Id
     ){
         UserLinkField userLinkField = UserLinkField.dao.findFirst("select * from user_link_field " +
-                "where field_id=?",areaId);
+                "where field_id=? AND user_id=?",areaId,uId);
         if(userLinkField==null)//如果第一次接触该领域，创建该领域对应的图谱
         {
-            //在关系型数据库中加入相关记录
+            //在关系型数据库中加入用户-领域记录
             UserLinkField newUserLinkField=new UserLinkField();
             newUserLinkField.setFieldId(areaId);
             newUserLinkField.setUserId(uId);
             newUserLinkField.save();
+            //todo 在关系型数据库中加入用户-岗位记录,目标岗位不可以再添加，限制“加入目标岗位”按钮的使用
             //在图数据库中生成用户图谱
             neo4jServiceL.createMapForUser(uId,areaId);
         }
@@ -100,13 +127,13 @@ public class UserControllerL {
     }
 
     @GetMapping("/addPointToUserMap")
-    public void addPointToUserMap(
+    public BaseResponse addPointToUserMap(
             @RequestParam("uId") BigInteger uId,//用户id
             @RequestParam("pNameId") BigInteger pNameId//知识点Id
     ) {
         BigInteger areaId = MoocCluster.dao.findById(pNameId).getFieldId();//由知识点得到对应的领域
         UserLinkField userLinkField = UserLinkField.dao.findFirst("select * from user_link_field " +
-                "where field_id=?",areaId);
+                "where field_id=? AND user_id",areaId,uId);
         if(userLinkField==null)//如果第一次接触该领域，创建该领域对应的图谱
         {
             //在关系型数据库中加入相关记录
@@ -122,6 +149,8 @@ public class UserControllerL {
         neo4jServiceL.setPointFinish(nodeList);
         //将该知识点的状态设为正在学习
         neo4jServiceL.setPointLearning(pNameId.longValue());
+        br.setResult(ResultCodeEnum.SUCCESS);
+        return br;
     }
 
     @GetMapping("/getMapByAreaUser")//得到某个用户某个领域的知识图谱
